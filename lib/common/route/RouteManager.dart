@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wan_android/MainPage.dart';
 import 'package:wan_android/SplashPage.dart';
-import 'package:wan_android/module/home/Home.dart';
-import 'package:wan_android/module/me/Me.dart';
-import 'package:wan_android/module/qa/Qa.dart';
-import 'package:wan_android/module/sort/Sort.dart';
+import 'file:///C:/Users/Ailiwean/Desktop/project/wan_android/lib/module/home/ui/Home.dart';
+import 'file:///C:/Users/Ailiwean/Desktop/project/wan_android/lib/module/me/ui/Me.dart';
+import 'file:///C:/Users/Ailiwean/Desktop/project/wan_android/lib/module/qa/ui/Qa.dart';
+import 'file:///C:/Users/Ailiwean/Desktop/project/wan_android/lib/module/sort/ui/Sort.dart';
 
 ///  路由管理
 class RouteManager {
@@ -23,11 +23,11 @@ class RouteManager {
     final routeName = settings.name;
 
     if (routeName == null || routeName.isEmpty) {
-      throw "route Name is not Null or Empty ";
+      throw "common.route Name is not Null or Empty ";
     }
 
     final build = route[routeName];
-    if (build == null) throw "route values is not Null";
+    if (build == null) throw "common.route values is not Null";
 
     return settings.arguments != null
         //带参路由

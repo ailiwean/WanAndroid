@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wan_android/SplashPage.dart';
-import 'package:wan_android/route/RouteManager.dart';
+import 'package:wan_android/common/route/RouteManager.dart';
+import 'common/network/Network.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,5 +19,8 @@ class MyApp extends StatelessWidget {
   }
 
   initApp(BuildContext context) {
+    Network.build()
+        .setBaseUrl("https://wanandroid.com")
+        .setBaseHeaders({}).build();
   }
 }

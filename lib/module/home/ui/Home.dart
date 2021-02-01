@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:wan_android/common/network/Network.dart';
 import 'package:wan_android/module/RootPage.dart';
+import 'package:wan_android/module/home/api/Test.dart';
 
 class Home extends StatefulWidget with RootPage {
   @override
@@ -19,6 +21,12 @@ class Home extends StatefulWidget with RootPage {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text("首页"));
+    return Center(
+        child: ElevatedButton(
+      child: Text("首页"),
+      onPressed: () {
+        Network.execute(test()).then((value) => {print(value.data.toString())});
+      },
+    ));
   }
 }
