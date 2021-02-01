@@ -10,16 +10,15 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("dddd"),
-      ),
-      body: ElevatedButton(
-        child: Text("点击跳转"),
-        onPressed: () {
-          RouteManager.startPage(context, MainPage);
-        },
-      ),
+    _delayStartMainPage(context);
+    return Center(
+      child: Text("SplashActivity"),
     );
+  }
+
+  _delayStartMainPage(BuildContext context) {
+    Future.delayed(Duration(milliseconds: 500), () {
+      RouteManager.startPageWithFinish(context, MainPage);
+    });
   }
 }

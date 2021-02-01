@@ -47,4 +47,9 @@ class RouteManager {
         .pushNamed(RouteManager.getRouteName(type), arguments: argusments);
   }
 
+  ///启动一个页面关闭当前页面
+  static startPageWithFinish(BuildContext context, Type type, {argusments}) {
+    Navigator.of(context).popAndPushNamed(RouteManager.getRouteName(type),
+        arguments: argusments);
+  }
 }
