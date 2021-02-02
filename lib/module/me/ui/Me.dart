@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:wan_android/common/network/Network.dart';
 import 'package:wan_android/module/RootPage.dart';
+import 'package:wan_android/module/home/api/Test.dart';
 
 class Me extends StatefulWidget with RootPage {
+  static String pageName = "我的";
+
   @override
   _MeState createState() => _MeState();
 
   @override
   String getPageName() {
-    return "我的";
+    return pageName;
   }
 
   @override
@@ -19,8 +23,11 @@ class Me extends StatefulWidget with RootPage {
 class _MeState extends State<Me> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text("我的"),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(Me.pageName),
+      ),
     );
   }
 }

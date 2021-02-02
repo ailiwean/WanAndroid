@@ -21,10 +21,6 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("appbar"),
-          backgroundColor: Colors.black26,
-        ),
         body: pageList[curentIndex] as Widget,
         bottomNavigationBar: _getBottomNavigationBar());
   }
@@ -37,7 +33,6 @@ class _MainPageState extends State<MainPage> {
     });
     return BottomNavigationBar(
       items: itemList,
-      backgroundColor: AppColors.navigatorBg,
       unselectedItemColor: AppColors.navigatorItemColor,
       selectedItemColor: AppColors.navigatorItemSelectColor,
       type: BottomNavigationBarType.fixed,
