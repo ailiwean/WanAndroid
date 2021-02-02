@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:wan_android/common/native/Native.dart';
+import 'package:wan_android/common/native/NativeChannel.dart';
 import 'package:wan_android/common/utils/ToastUtils.dart';
 import 'package:wan_android/module/RootPage.dart';
+import 'package:wan_android/res/AppColors.dart';
+import 'package:wan_android/res/Style.dart';
 
 class Home extends StatefulWidget with RootPage {
   static String pageName = "首页";
@@ -27,10 +31,16 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         title: Text(Home.pageName),
         leading: ElevatedButton(
-          style: ButtonStyle(),
-          child: Icon(Icons.qr_code_scanner),
+          style: Style.transButtonStyle,
+          child: Icon(
+            Icons.qr_code_scanner,
+            color: AppColors.comIconColor,
+          ),
           onPressed: () {
-            ToastUtils.showToast("扫码");
+            Native(
+              channel: NativeChannel.scan[0],
+              servelName: NativeChannel.scan[1],
+            ).notice().then((value) => ToastUtils.showToast(value.toString()));
           },
         ),
       ),

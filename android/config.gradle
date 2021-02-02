@@ -1,0 +1,17 @@
+ext {
+    version = [:]
+    version.scan = ["0.2.2", "0.0.6"]
+    version.androidx = ["1.2.0"]
+
+
+    dependences = [:]
+    dependences.scan = [
+            "com.github.ailiwean:NBZxing:${version.scan[0]}",
+            "com.github.ailiwean:NBZxing-Scale:${version.scan[1]}"
+    ]
+    dependences.androidx = [
+            "androidx.appcompat:appcompat:${version.androidx[0]}"
+    ]
+
+
+}

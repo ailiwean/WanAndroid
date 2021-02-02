@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'                              
+apply plugin: 'kotlin-android-extensions'
 apply from: "$rootDir/flutter.gradle"
 
 android {
@@ -12,7 +14,7 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.ailiwean.wan_android"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 30
         versionCode project.flutterVersionCode.toInteger()
         versionName project.flutterVersionName
@@ -28,5 +30,15 @@ android {
 }
 
 dependencies {
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    
+    //扫码
+    api rootProject.ext.dependences.scan
+
+
+    //androidx
+    api  rootProject.ext.dependences.androidx
+
+
 }

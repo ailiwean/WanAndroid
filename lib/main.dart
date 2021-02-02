@@ -3,7 +3,8 @@ import 'package:wan_android/SplashPage.dart';
 import 'package:wan_android/common/route/RouteManager.dart';
 import 'package:wan_android/common/utils/AppBarUtils.dart';
 import 'package:wan_android/common/utils/ToastUtils.dart';
- import 'package:wan_android/res/AppColors.dart';
+import 'package:wan_android/res/AppColors.dart';
+import 'package:wan_android/res/Style.dart';
 
 import 'common/network/Network.dart';
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: RouteManager.generateRoute,
       theme: ThemeData(
           primaryColor: AppColors.primaryColor,
-          buttonColor: AppColors.buttonColor),
+          buttonTheme: ButtonThemeData()),
     );
   }
 
