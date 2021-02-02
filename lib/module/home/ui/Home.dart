@@ -25,7 +25,8 @@ class _HomeState extends State<Home> {
         child: ElevatedButton(
       child: Text("首页"),
       onPressed: () {
-        Network.execute(test()).then((value) => {print(value.data.toString())});
+        Network.execute(test()).then((value) =>
+            {print("返回为-------" + value.data.toString() + "---------")});
       },
     ));
   }

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:wan_android/module/RootPage.dart';
-import 'file:///C:/Users/Ailiwean/Desktop/project/wan_android/lib/module/home/ui/Home.dart';
-import 'file:///C:/Users/Ailiwean/Desktop/project/wan_android/lib/module/me/ui/Me.dart';
-import 'file:///C:/Users/Ailiwean/Desktop/project/wan_android/lib/module/qa/ui/Qa.dart';
-import 'file:///C:/Users/Ailiwean/Desktop/project/wan_android/lib/module/sort/ui/Sort.dart';
+import 'package:wan_android/module/me/ui/Me.dart';
+import 'package:wan_android/module/qa/ui/Qa.dart';
 import 'package:wan_android/res/AppColors.dart';
+
+import 'module/home/ui/Home.dart';
+import 'module/sort/ui/Sort.dart';
 
 class MainPage extends StatefulWidget {
   @override

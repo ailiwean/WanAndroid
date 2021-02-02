@@ -5,10 +5,13 @@ class Network {
   final String baseUrl;
   final Map baseHeaders;
   final Dio dio = Dio();
+  final List<Interceptor> listInterceptor;
 
   static Network _network;
 
-  Network._({this.baseUrl, this.baseHeaders});
+  Network._({this.baseUrl, this.baseHeaders, this.listInterceptor}) {
+    dio.interceptors.addAll(listInterceptor);
+  }
 
   static Build build() => Build._();
 
@@ -19,14 +22,16 @@ class Network {
   }
 
   static Future<Response<T>> _get<T>(BaseApi baseApi) {
-    return Network._network.dio.get(_getUrl(baseApi) + _getHttpParams(baseApi),
-        options: Options(headers: _getMergeHeaderMap(baseApi)));
+    return _attatchCatchError(Network._network.dio.get(
+        _getUrl(baseApi) + _getHttpParams(baseApi),
+        options: Options(headers: _getMergeHeaderMap(baseApi))));
   }
 
   static Future<Response<T>> _post<T>(BaseApi baseApi) {
-    return Network._network.dio.post(_getUrl(baseApi) + _getHttpParams(baseApi),
+    return _attatchCatchError(Network._network.dio.post(
+        _getUrl(baseApi) + _getHttpParams(baseApi),
         data: baseApi.body,
-        options: Options(headers: _getMergeHeaderMap(baseApi)));
+        options: Options(headers: _getMergeHeaderMap(baseApi))));
   }
 
   static String _getUrl(BaseApi baseApi) {
@@ -55,6 +60,15 @@ class Network {
     if (baseApi.headers != null && baseApi.headers.isNotEmpty)
       headerMap.addAll(baseApi.headers);
   }
+
+  ///统一错误信息打印
+  static Future<Response<T>> _attatchCatchError<T>(Future<Response<T>> future) {
+    return future.catchError((dioError, stackTrace) {
+      print("网络请求错误：" + dioError.toString() + "------------ end ");
+    }, test: (Object o) {
+      return true;
+    });
+  }
 }
 
 class Build {
@@ -62,6 +76,7 @@ class Build {
 
   var _baseUrl;
   var _baseHeaders;
+  var _listInterceptor = <Interceptor>[];
 
   Build setBaseUrl(String baseUrl) {
     this._baseUrl = baseUrl;
@@ -73,8 +88,15 @@ class Build {
     return this;
   }
 
+  Build addInterceptor(Interceptor interceptor) {
+    _listInterceptor.add(interceptor);
+    return this;
+  }
+
   void build() {
-    Network._network =
-        new Network._(baseUrl: this._baseUrl, baseHeaders: this._baseHeaders);
+    Network._network = new Network._(
+        baseUrl: this._baseUrl,
+        baseHeaders: this._baseHeaders,
+        listInterceptor: this._listInterceptor);
   }
 }
