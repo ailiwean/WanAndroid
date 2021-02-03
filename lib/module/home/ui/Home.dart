@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:wan_android/common/native/Native.dart';
 import 'package:wan_android/common/native/NativeChannel.dart';
-import 'package:wan_android/common/network/Network.dart';
 import 'package:wan_android/common/utils/ToastUtils.dart';
 import 'package:wan_android/module/RootPage.dart';
-import 'package:wan_android/module/home/api/Test.dart';
+import 'package:wan_android/module/home/widget/HomeBanner.dart';
 import 'package:wan_android/res/AppColors.dart';
 import 'package:wan_android/res/Style.dart';
 
@@ -25,31 +24,36 @@ class Home extends StatefulWidget with RootPage {
   }
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
-    Network.execute<List>(test()).then<List>((value) {
-      ToastUtils.showToast("长度为${value.length}");
-      return null;
-    });
+    super.build(context);
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(Home.pageName),
-        leading: ElevatedButton(
-          style: Style.transButtonStyle,
-          child: Icon(
-            Icons.qr_code_scanner,
-            color: AppColors.comIconColor,
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(Home.pageName),
+          leading: ElevatedButton(
+            style: Style.transButtonStyle,
+            child: Icon(
+              Icons.qr_code_scanner,
+              color: AppColors.comIconColor,
+            ),
+            onPressed: () {
+              setState(() {});
+
+              Native(
+                channel: NativeChannel.scan[0],
+                servelName: NativeChannel.scan[1],
+              )
+                  .notice()
+                  .then((value) => ToastUtils.showToast(value.toString()));
+            },
           ),
-          onPressed: () {
-            Native(
-              channel: NativeChannel.scan[0],
-              servelName: NativeChannel.scan[1],
-            ).notice().then((value) => ToastUtils.showToast(value.toString()));
-          },
         ),
-      ),
-    );
+        body: HomeBanner());
   }
+
+  @override
+  bool get wantKeepAlive => true;
+
 }

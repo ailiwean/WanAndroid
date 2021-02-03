@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wan_android/common/network/Network.dart';
 import 'package:wan_android/module/RootPage.dart';
-import 'package:wan_android/module/home/api/Test.dart';
 
 class Me extends StatefulWidget with RootPage {
   static String pageName = "我的";

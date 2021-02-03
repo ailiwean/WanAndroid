@@ -1,0 +1,1 @@
+final pageSwitchDuration = 200;

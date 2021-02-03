@@ -11,7 +11,7 @@ import io.flutter.plugin.common.MethodChannel;
 
 public class MethodChannelExecute implements MethodChannel.MethodCallHandler {
 
-    public static String CHANNEL = MethodChannelExecute.class.getCanonicalName();
+    public static String CHANNEL = "com.ailiwean.wanandroid.scan";
     public static String METHOD = "scan";
     private static MethodChannelExecute methodCallHandler;
 

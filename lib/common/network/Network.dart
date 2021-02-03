@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:wan_android/common/network/BaseApi.dart';
 import 'package:wan_android/common/network/BaseResponse.dart';
@@ -17,27 +19,37 @@ class Network {
 
   static Build build() => Build._();
 
-  static Future<T> execute<T>(BaseApi baseApi) {
+  static Future<dynamic> execute(BaseApi baseApi) {
     if (baseApi.type != null)
-      return baseApi.type == Type.GET ? _get(baseApi) : _post(baseApi);
-    return baseApi.body == null ? _get(baseApi) : _post(baseApi);
+      return baseApi.type == Type.GET
+          ? _get<dynamic>(baseApi)
+          : _post<dynamic>(baseApi);
+    return baseApi.body == null
+        ? _get<dynamic>(baseApi)
+        : _post<dynamic>(baseApi);
+  }
+
+  static Future<List<dynamic>> executeList(BaseApi baseApi) {
+    if (baseApi.type != null)
+      return baseApi.type == Type.GET
+          ? _get<List<dynamic>>(baseApi)
+          : _post<List<dynamic>>(baseApi);
+    return baseApi.body == null
+        ? _get<List<dynamic>>(baseApi)
+        : _post<List<dynamic>>(baseApi);
   }
 
   static Future<T> _get<T>(BaseApi baseApi) {
-    return _attatchCatchError(Network._network.dio.get(
+    return _attatchCatchError<T>(Network._network.dio.get(
         _getUrl(baseApi) + _getHttpParams(baseApi),
-        options: Options(
-            headers: _getMergeHeaderMap(baseApi),
-            responseType: ResponseType.json)));
+        options: Options(headers: _getMergeHeaderMap(baseApi))));
   }
 
   static Future<T> _post<T>(BaseApi baseApi) {
-    return _attatchCatchError(Network._network.dio.post(
+    return _attatchCatchError<T>(Network._network.dio.post(
         _getUrl(baseApi) + _getHttpParams(baseApi),
         data: baseApi.body,
-        options: Options(
-            headers: _getMergeHeaderMap(baseApi),
-            responseType: ResponseType.json)));
+        options: Options(headers: _getMergeHeaderMap(baseApi))));
   }
 
   static String _getUrl(BaseApi baseApi) {
@@ -70,12 +82,13 @@ class Network {
   ///统一错误信息打印
   static Future<T> _attatchCatchError<T>(Future<Response> future) {
     return future.catchError((dioError, stackTrace) {
-      print(_errorInfoOutput(dioError));
+      _errorInfoOutput(dioError);
     }, test: (Object o) {
       return true;
     }).then((value) {
+      _succesInfoOutput(value);
       var response = BaseResponse.fromJson(value.data);
-      if (response.errorCode == 0) return response.data;
+      if (response.errorCode == 0) return value.data["data"];
       ToastUtils.showToast(response.errorMsg);
       throw response.errorMsg;
     });
@@ -86,6 +99,12 @@ class Network {
     print("接口地址：" + dioError.request.baseUrl + dioError.request.path);
     print("出错堆栈：" + dioError.toString());
   }
+
+  static String _succesInfoOutput(Response response) {
+    print("-----------------接口调用成功-----------------");
+    print("接口地址：" + response.request.baseUrl + response.request.path);
+    print("json数据：" + json.encode(response.data));
+    }
 }
 
 class Build {

@@ -1,6 +1,8 @@
 /// errorCode : 0
 /// errorMsg : ""
 
+
+
 class BaseResponse<T> {
   int _errorCode;
   String _errorMsg;
@@ -21,6 +23,5 @@ class BaseResponse<T> {
   BaseResponse.fromJson(dynamic json) {
     _errorCode = json["errorCode"];
     _errorMsg = json["errorMsg"];
-    _data = json["data"];
   }
 }
