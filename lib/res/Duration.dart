@@ -1,1 +1,1 @@
-final pageSwitchDuration = 200;
+Duration pageSwitchDuration = Duration(milliseconds: 300);

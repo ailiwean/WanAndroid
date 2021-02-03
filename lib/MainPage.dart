@@ -28,7 +28,6 @@ class _MainPageState extends State<MainPage> {
       onPageChanged: (current) {
         setState(() {
           curentIndex = current;
-
         });
       },
     );
@@ -58,8 +57,7 @@ class _MainPageState extends State<MainPage> {
           curentIndex = index;
         });
         pageView.controller.animateToPage(index,
-            duration: Duration(milliseconds: pageSwitchDuration),
-            curve: Curves.ease);
+            duration: pageSwitchDuration, curve: Curves.ease);
       },
     );
   }

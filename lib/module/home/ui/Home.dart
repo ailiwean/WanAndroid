@@ -50,10 +50,12 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
             },
           ),
         ),
-        body: HomeBanner());
+        body: Align(
+          child: HomeBanner(),
+          alignment: Alignment.topCenter,
+        ));
   }
 
   @override
   bool get wantKeepAlive => true;
-
 }
