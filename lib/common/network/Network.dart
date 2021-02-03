@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:wan_android/common/network/BaseApi.dart';
+import 'package:wan_android/common/network/BaseResponse.dart';
+import 'package:wan_android/common/utils/ToastUtils.dart';
 
 class Network {
   final String baseUrl;
@@ -15,23 +17,27 @@ class Network {
 
   static Build build() => Build._();
 
-  static Future<Response<T>> execute<T>(BaseApi baseApi) {
+  static Future<T> execute<T>(BaseApi baseApi) {
     if (baseApi.type != null)
       return baseApi.type == Type.GET ? _get(baseApi) : _post(baseApi);
     return baseApi.body == null ? _get(baseApi) : _post(baseApi);
   }
 
-  static Future<Response<T>> _get<T>(BaseApi baseApi) {
+  static Future<T> _get<T>(BaseApi baseApi) {
     return _attatchCatchError(Network._network.dio.get(
         _getUrl(baseApi) + _getHttpParams(baseApi),
-        options: Options(headers: _getMergeHeaderMap(baseApi))));
+        options: Options(
+            headers: _getMergeHeaderMap(baseApi),
+            responseType: ResponseType.json)));
   }
 
-  static Future<Response<T>> _post<T>(BaseApi baseApi) {
+  static Future<T> _post<T>(BaseApi baseApi) {
     return _attatchCatchError(Network._network.dio.post(
         _getUrl(baseApi) + _getHttpParams(baseApi),
         data: baseApi.body,
-        options: Options(headers: _getMergeHeaderMap(baseApi))));
+        options: Options(
+            headers: _getMergeHeaderMap(baseApi),
+            responseType: ResponseType.json)));
   }
 
   static String _getUrl(BaseApi baseApi) {
@@ -62,12 +68,23 @@ class Network {
   }
 
   ///统一错误信息打印
-  static Future<Response<T>> _attatchCatchError<T>(Future<Response<T>> future) {
+  static Future<T> _attatchCatchError<T>(Future<Response> future) {
     return future.catchError((dioError, stackTrace) {
-      print("网络请求错误：" + dioError.toString() + "------------ end ");
+      print(_errorInfoOutput(dioError));
     }, test: (Object o) {
       return true;
+    }).then((value) {
+      var response = BaseResponse.fromJson(value.data);
+      if (response.errorCode == 0) return response.data;
+      ToastUtils.showToast(response.errorMsg);
+      throw response.errorMsg;
     });
+  }
+
+  static String _errorInfoOutput(DioError dioError) {
+    print("-----------------接口调用流程出错-----------------");
+    print("接口地址：" + dioError.request.baseUrl + dioError.request.path);
+    print("出错堆栈：" + dioError.toString());
   }
 }
 

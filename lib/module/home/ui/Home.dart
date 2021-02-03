@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:wan_android/common/native/Native.dart';
 import 'package:wan_android/common/native/NativeChannel.dart';
+import 'package:wan_android/common/network/Network.dart';
 import 'package:wan_android/common/utils/ToastUtils.dart';
 import 'package:wan_android/module/RootPage.dart';
+import 'package:wan_android/module/home/api/Test.dart';
 import 'package:wan_android/res/AppColors.dart';
 import 'package:wan_android/res/Style.dart';
 
@@ -26,6 +28,10 @@ class Home extends StatefulWidget with RootPage {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    Network.execute<List>(test()).then<List>((value) {
+      ToastUtils.showToast("长度为${value.length}");
+      return null;
+    });
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

@@ -3,6 +3,7 @@ package com.ailiwean.wan_android.scan
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -22,8 +23,8 @@ class ScanActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fullScreen()
         setContentView(R.layout.scan_layout)
+        fullScreen()
         scanView.synchLifeStart(this)
         scanView.bindResult {
             setResult(Activity.RESULT_OK, Intent().apply {
