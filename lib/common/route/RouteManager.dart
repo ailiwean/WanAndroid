@@ -1,8 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wan_android/MainPage.dart';
 import 'package:wan_android/SplashPage.dart';
+import 'package:wan_android/common/route/AnimaRoute.dart';
 import 'package:wan_android/module/home/ui/Home.dart';
+import 'package:wan_android/module/home/ui/HomeSearch.dart';
 import 'package:wan_android/module/me/ui/Me.dart';
 import 'package:wan_android/module/qa/ui/Qa.dart';
 import 'package:wan_android/module/sort/ui/Sort.dart';
@@ -16,6 +17,7 @@ class RouteManager {
     getRouteName(Me): (context, {arguments}) => Me(),
     getRouteName(Qa): (context, {arguments}) => Qa(),
     getRouteName(Sort): (context, {arguments}) => Sort(),
+    getRouteName(HomeSearch): (context, {arguments}) => HomeSearch(),
   };
 
   // ignore: top_level_function_literal_block
@@ -31,10 +33,10 @@ class RouteManager {
 
     return settings.arguments != null
         //带参路由
-        ? MaterialPageRoute(
+        ? AnimaPageRoute(
             builder: (context) => build(context, arguments: settings.arguments))
         //无参路由
-        : MaterialPageRoute(builder: (context) => build(context));
+        : AnimaPageRoute(builder: (context) => build(context));
   };
 
   static String getRouteName(Type type) {

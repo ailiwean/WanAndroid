@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:wan_android/common/native/Native.dart';
 import 'package:wan_android/common/native/NativeChannel.dart';
+import 'package:wan_android/common/route/RouteManager.dart';
 import 'package:wan_android/common/utils/ToastUtils.dart';
+import 'package:wan_android/common/widget/EasyRefreshWrap.dart';
 import 'package:wan_android/module/RootPage.dart';
+import 'package:wan_android/module/home/ui/HomeSearch.dart';
 import 'package:wan_android/module/home/widget/HomeBanner.dart';
 import 'package:wan_android/res/AppColors.dart';
 import 'package:wan_android/res/Style.dart';
@@ -50,10 +54,34 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
                   .then((value) => ToastUtils.showToast(value.toString()));
             },
           ),
+          actions: [
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+              child: ElevatedButton(
+                style: Style.transButtonStyle,
+                child: Icon(
+                  Icons.search,
+                  color: AppColors.comIconColor,
+                ),
+                onPressed: () {
+                  //搜索页
+                  RouteManager.startPage(context, HomeSearch);
+                },
+              ),
+            )
+          ],
         ),
-        body: Align(
-          child: HomeBanner(),
-          alignment: Alignment.topCenter,
+        body: EasyRefreshWrap(
+          child: Align(
+            child: HomeBanner(),
+            alignment: Alignment.topCenter,
+          ),
+          onRefresh: () {
+            ToastUtils.showToast("刷新");
+          },
+          onLoad: () {
+            ToastUtils.showToast("加载");
+          },
         ));
   }
 
