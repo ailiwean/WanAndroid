@@ -19,9 +19,10 @@ class Me extends StatefulWidget with RootPage {
   }
 }
 
-class _MeState extends State<Me> {
+class _MeState extends State<Me> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -29,4 +30,7 @@ class _MeState extends State<Me> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

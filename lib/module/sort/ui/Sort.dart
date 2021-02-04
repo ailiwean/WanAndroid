@@ -18,9 +18,10 @@ class Sort extends StatefulWidget with RootPage {
   }
 }
 
-class _SortState extends State<Sort> {
+class _SortState extends State<Sort> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -28,4 +29,7 @@ class _SortState extends State<Sort> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

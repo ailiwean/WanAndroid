@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:wan_android/common/network/Network.dart';
 import 'package:wan_android/common/utils/ToastUtils.dart';
@@ -58,16 +59,19 @@ class _HomeBannerState extends State<HomeBanner> {
             else
               return ElevatedButton(
                 style: Style.transButtonStyle,
-                child: Image.network(
-                  pageDataList[index % pageDataList.length].imagePath,
-                  fit: BoxFit.fitHeight,
-                ),
+                child: _getCahceNetImage(index),
                 onPressed: () {
                   setState(() {});
                 },
               );
           },
         ));
+  }
+
+  _getCahceNetImage(int index) {
+    return Image(
+        image: CachedNetworkImageProvider(
+            pageDataList[index % pageDataList.length].imagePath));
   }
 
   timingTask() {

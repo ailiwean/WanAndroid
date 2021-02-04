@@ -27,6 +27,7 @@ class Home extends StatefulWidget with RootPage {
 class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    print("home页面build");
     super.build(context);
     return Scaffold(
         appBar: AppBar(
