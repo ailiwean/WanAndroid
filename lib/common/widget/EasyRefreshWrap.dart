@@ -5,14 +5,19 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 /// @Author: SWY
 /// @Date: 2021/2/4 18:56
 class EasyRefreshWrap extends EasyRefresh {
-  EasyRefreshWrap(
-      {Widget child, OnRefreshCallback onRefresh, OnRefreshCallback onLoad})
+
+  final requestData;
+
+  EasyRefreshWrap({Widget child, this.requestData})
       : super(
-            child: child,
-            onRefresh: onRefresh,
-            onLoad: onLoad,
-            enableControlFinishLoad: true,
-            enableControlFinishRefresh: true) {}
+          child: child,
+          onRefresh: () {},
+          onLoad: () {
+
+          },
+          enableControlFinishLoad: true,
+          enableControlFinishRefresh: true,
+        ) {}
 }
 
-typedef initData = Function();
+typedef requestData = Function(int page, int pageNum);
