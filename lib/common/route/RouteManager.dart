@@ -61,4 +61,9 @@ class RouteManager {
     Navigator.of(context).popAndPushNamed(RouteManager.getRouteName(type),
         arguments: argusments);
   }
+
+  ///关闭这个页面
+  static finish(BuildContext context) {
+    Navigator.pop(context);
+  }
 }

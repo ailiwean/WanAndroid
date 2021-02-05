@@ -3,10 +3,14 @@ import 'dart:io';
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:wan_android/common/route/RouteManager.dart';
 import 'package:wan_android/res/AppColors.dart';
 import 'package:wan_android/res/Style.dart';
 
-//通用webview
+/// @Description: 全局通用WebView
+/// @Author: SWY
+/// @Date: 2021/2/5 21:56
 class WebViewWrap extends StatefulWidget {
   final url;
   final arguments;
@@ -63,34 +67,45 @@ class _WebViewWrapState extends State<WebViewWrap> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title,
-            overflow: TextOverflow.fade, style: TextStyle(fontSize: 16)),
-        actions: [
-          Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-              child: ElevatedButton(
-                style: Style.transButtonStyle,
-                child: Icon(
-                  Icons.more_vert,
-                  color: AppColors.comIconColor,
-                ),
-                onPressed: () {},
-              )),
-        ],
-      ),
-      body: Stack(
-        children: [
-          FractionallySizedBox(
-            widthFactor: 1,
-            heightFactor: 1,
-            child: _getWebView(),
+    return WillPopScope(
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(title,
+                overflow: TextOverflow.fade, style: TextStyle(fontSize: 16)),
+            actions: [
+              Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                  child: ElevatedButton(
+                    style: Style.transButtonStyle,
+                    child: Icon(
+                      Icons.more_vert,
+                      color: AppColors.comIconColor,
+                    ),
+                    onPressed: () {},
+                  )),
+            ],
           ),
-          _getIndicatorBar()
-        ],
-      ),
-    );
+          body: Stack(
+            children: [
+              FractionallySizedBox(
+                widthFactor: 1,
+                heightFactor: 1,
+                child: _getWebView(),
+              ),
+              _getIndicatorBar()
+            ],
+          ),
+        ),
+        onWillPop: () {
+          webView.canGoBack().then((value) {
+            if (value)
+              webView.goBack();
+            else
+              RouteManager.finish(context);
+          });
+
+          return null;
+        });
   }
 
   InAppWebView _getWebView() {
@@ -98,8 +113,9 @@ class _WebViewWrapState extends State<WebViewWrap> {
       initialUrl: url,
       // contextMenu: contextMenu,
       initialHeaders: {},
-      initialOptions:
-          InAppWebViewGroupOptions(crossPlatform: InAppWebViewOptions()),
+      initialOptions: InAppWebViewGroupOptions(
+          crossPlatform:
+              InAppWebViewOptions(useShouldOverrideUrlLoading: true)),
       onWebViewCreated: (InAppWebViewController controller) {
         webView = controller;
       },
@@ -107,9 +123,6 @@ class _WebViewWrapState extends State<WebViewWrap> {
         setState(() {
           this.title = title;
         });
-      },
-      shouldOverrideUrlLoading: (controller, shouldOverrideUrlLoadingRequest) {
-        return null;
       },
       onLoadStart: (controller, url) {
         setState(() {
@@ -127,6 +140,16 @@ class _WebViewWrapState extends State<WebViewWrap> {
           animation.updateValues(this.progress);
         });
       },
+      shouldOverrideUrlLoading: (controller, shouldOverrideUrlLoadingRequest) {
+        String nextUrl = shouldOverrideUrlLoadingRequest.url;
+        if (nextUrl.startsWith("http:") || nextUrl.startsWith("https:")) {
+          webView.loadUrl(url: nextUrl);
+          return;
+        } else {
+          launch(nextUrl);
+        }
+        return null;
+      },
     );
   }
 
@@ -138,7 +161,6 @@ class _WebViewWrapState extends State<WebViewWrap> {
             valueColor: animation)
         : Container();
   }
-
 }
 
 class ColorsAnimation extends Animation<Color> {

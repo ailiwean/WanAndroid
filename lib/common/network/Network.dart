@@ -5,6 +5,9 @@ import 'package:wan_android/common/network/BaseApi.dart';
 import 'package:wan_android/common/network/BaseResponse.dart';
 import 'package:wan_android/common/utils/ToastUtils.dart';
 
+/// 网络请求
+/// @Author: SWY
+/// @Date: 2021/2/3 19:40
 class Network {
   final String baseUrl;
   final Map baseHeaders;
@@ -104,7 +107,7 @@ class Network {
     print("-----------------接口调用成功-----------------");
     print("接口地址：" + response.request.baseUrl + response.request.path);
     print("json数据：" + json.encode(response.data));
-    }
+  }
 }
 
 class Build {

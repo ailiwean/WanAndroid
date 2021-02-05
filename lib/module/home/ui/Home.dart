@@ -93,7 +93,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
     launch(text).catchError((dynamic) {
       //普通文本复制到剪贴板
       Clipboard.setData(ClipboardData(text: text));
-      ToastUtils.showToast("已复制到剪切板");
+      ToastUtils.showToast("内容已复制到剪切板");
     }).then((value) {});
   }
 
