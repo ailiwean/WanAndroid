@@ -30,6 +30,8 @@ dependencies:
   fluttertoast: ^7.1.6
   cached_network_image: ^2.4.1
   flutter_easyrefresh: ^2.1.8
+  flutter_inappwebview: ^4.0.0+4
+  url_launcher: ^5.7.10
 
 dev_dependencies:
   flutter_test:

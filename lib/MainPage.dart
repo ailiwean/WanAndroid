@@ -6,7 +6,7 @@ import 'package:wan_android/res/AppColors.dart';
 import 'package:wan_android/res/Duration.dart';
 
 import 'module/home/ui/Home.dart';
-import 'module/sort/ui/Sort.dart';
+import 'module/system/ui/System.dart';
 
 class MainPage extends StatefulWidget {
   @override

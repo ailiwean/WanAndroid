@@ -9,6 +9,9 @@ class _HomeSearchState extends State<HomeSearch> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("搜索"),
+      ),
       body: Center(
         child: Text("搜索"),
       ),

@@ -1,8 +1,7 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
+/// 内部维护pagesize,pageNumber
 class EasyRefreshWrap extends EasyRefresh {
   EasyRefreshWrap(
       {Widget child, OnRefreshCallback onRefresh, OnRefreshCallback onLoad})
@@ -11,5 +10,5 @@ class EasyRefreshWrap extends EasyRefresh {
             onRefresh: onRefresh,
             onLoad: onLoad,
             enableControlFinishLoad: true,
-            enableControlFinishRefresh: true);
+            enableControlFinishRefresh: true) {}
 }

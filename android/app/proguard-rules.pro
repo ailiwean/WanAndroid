@@ -1,0 +1,1 @@
+-keep public class com.ailiwean.module_grayscale.GrayScaleDispatch

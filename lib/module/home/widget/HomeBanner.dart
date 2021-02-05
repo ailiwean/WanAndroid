@@ -3,9 +3,12 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:wan_android/common/network/Network.dart';
+import 'package:wan_android/common/route/RouteManager.dart';
 import 'package:wan_android/common/utils/ToastUtils.dart';
+import 'package:wan_android/common/widget/WebViewWrap.dart';
 import 'package:wan_android/module/home/api/HomeApi.dart';
 import 'package:wan_android/module/home/bean/res/BannerRes.dart';
+import 'package:wan_android/module/home/ui/HomeSearch.dart';
 import 'package:wan_android/res/Duration.dart';
 import 'package:wan_android/res/Style.dart';
 
@@ -25,6 +28,8 @@ class _HomeBannerState extends State<HomeBanner> {
 
   PageController _pageController;
 
+  Timer timer;
+
   @override
   void initState() {
     super.initState();
@@ -38,9 +43,9 @@ class _HomeBannerState extends State<HomeBanner> {
       setState(() {
         pageDataList.clear();
         pageDataList.addAll(value.map((e) => BannerRes.fromJson(e)));
+        startTimingTask();
       });
     });
-    timingTask();
   }
 
   @override
@@ -57,11 +62,24 @@ class _HomeBannerState extends State<HomeBanner> {
             if (pageDataList.length == 0)
               return null;
             else
-              return ElevatedButton(
-                style: Style.transButtonStyle,
-                child: _getCahceNetImage(index),
-                onPressed: () {
-                  setState(() {});
+              return Listener(
+                child: ElevatedButton(
+                  style: Style.transButtonStyle,
+                  child: _getCahceNetImage(index),
+                  onPressed: () {
+                    setState(() {
+                      RouteManager.startPage(context, WebViewWrap, argusments: {
+                        "url": pageDataList[index % pageDataList.length].url,
+                        "title": pageDataList[index % pageDataList.length].title
+                      });
+                    });
+                  },
+                ),
+                onPointerDown: (event) {
+                  endTimingTask();
+                },
+                onPointerUp: (event) {
+                  startTimingTask();
                 },
               );
           },
@@ -74,11 +92,17 @@ class _HomeBannerState extends State<HomeBanner> {
             pageDataList[index % pageDataList.length].imagePath));
   }
 
-  timingTask() {
-    Timer.periodic(Duration(seconds: 3), (Timer timer) {
+  startTimingTask() {
+    if (timer != null) return;
+    timer = Timer.periodic(Duration(seconds: 5), (Timer timer) {
       _pageController.animateToPage((_pageController.page + 1).toInt(),
           duration: pageSwitchDuration, curve: Curves.ease);
     });
+  }
+
+  endTimingTask() {
+    if (timer != null) timer.cancel();
+    timer = null;
   }
 
   PageController _getPageController() {

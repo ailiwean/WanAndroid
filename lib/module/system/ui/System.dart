@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wan_android/module/RootPage.dart';
 
 class Sort extends StatefulWidget with RootPage {
-  static String pageName = "分类";
+  static String pageName = "体系";
 
   @override
   _SortState createState() => _SortState();

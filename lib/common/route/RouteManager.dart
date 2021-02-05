@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:wan_android/MainPage.dart';
 import 'package:wan_android/SplashPage.dart';
 import 'package:wan_android/common/route/AnimaRoute.dart';
+import 'package:wan_android/common/widget/WebViewWrap.dart';
 import 'package:wan_android/module/home/ui/Home.dart';
 import 'package:wan_android/module/home/ui/HomeSearch.dart';
 import 'package:wan_android/module/me/ui/Me.dart';
 import 'package:wan_android/module/qa/ui/Qa.dart';
-import 'package:wan_android/module/sort/ui/Sort.dart';
+import 'package:wan_android/module/system/ui/System.dart';
 
 ///  路由管理
 class RouteManager {
@@ -18,6 +19,10 @@ class RouteManager {
     getRouteName(Qa): (context, {arguments}) => Qa(),
     getRouteName(Sort): (context, {arguments}) => Sort(),
     getRouteName(HomeSearch): (context, {arguments}) => HomeSearch(),
+    getRouteName(WebViewWrap): (context, {arguments}) => WebViewWrap(
+          url: arguments["url"],
+          arguments: arguments,
+        ),
   };
 
   // ignore: top_level_function_literal_block
@@ -45,12 +50,14 @@ class RouteManager {
 
   /// 启动一个页面
   static startPage(BuildContext context, Type type, {argusments}) {
+    if (RouteManager.getRouteName(type) == null) throw "Not fount this Page";
     Navigator.of(context)
         .pushNamed(RouteManager.getRouteName(type), arguments: argusments);
   }
 
   ///启动一个页面关闭当前页面
   static startPageWithFinish(BuildContext context, Type type, {argusments}) {
+    if (RouteManager.getRouteName(type) == null) throw "Not fount this Page";
     Navigator.of(context).popAndPushNamed(RouteManager.getRouteName(type),
         arguments: argusments);
   }
