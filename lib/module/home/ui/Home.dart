@@ -9,6 +9,7 @@ import 'package:wan_android/common/widget/EasyRefreshWrap.dart';
 import 'package:wan_android/common/widget/WebViewWrap.dart';
 import 'package:wan_android/module/RootPage.dart';
 import 'package:wan_android/module/home/ui/HomeSearch.dart';
+import 'package:wan_android/module/home/widget/ArticleListWidget.dart';
 import 'package:wan_android/module/home/widget/HomeBanner.dart';
 import 'package:wan_android/res/AppColors.dart';
 import 'package:wan_android/res/Style.dart';
@@ -34,6 +35,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    UIControl control = UIControl();
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -69,9 +71,10 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
           ],
         ),
         body: EasyRefreshWrap(
-          child: Align(
-            child: HomeBanner(),
-            alignment: Alignment.topCenter,
+          child: ArticleListWidget(
+            uiControl: control,
+            head: HomeBanner(),
+            bottom: HomeBanner(),
           ),
           onRefresh: () {
             ToastUtils.showToast("刷新");

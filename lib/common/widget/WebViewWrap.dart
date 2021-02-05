@@ -70,6 +70,16 @@ class _WebViewWrapState extends State<WebViewWrap> {
     return WillPopScope(
         child: Scaffold(
           appBar: AppBar(
+            leading: ElevatedButton(
+              style: Style.transButtonStyle,
+              child: Icon(
+                Icons.keyboard_arrow_left_sharp,
+                color: AppColors.comIconColor,
+              ),
+              onPressed: () {
+                RouteManager.finish(context);
+              },
+            ),
             title: Text(title,
                 overflow: TextOverflow.fade, style: TextStyle(fontSize: 16)),
             actions: [

@@ -14,3 +14,5 @@ class EasyRefreshWrap extends EasyRefresh {
             enableControlFinishLoad: true,
             enableControlFinishRefresh: true) {}
 }
+
+typedef initData = Function();
