@@ -4,11 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:wan_android/common/network/Network.dart';
 import 'package:wan_android/common/route/RouteManager.dart';
-import 'package:wan_android/common/utils/ToastUtils.dart';
 import 'package:wan_android/common/widget/WebViewWrap.dart';
 import 'package:wan_android/module/home/api/HomeApi.dart';
 import 'package:wan_android/module/home/bean/res/BannerRes.dart';
-import 'package:wan_android/module/home/ui/HomeSearch.dart';
 import 'package:wan_android/res/Duration.dart';
 import 'package:wan_android/res/Style.dart';
 

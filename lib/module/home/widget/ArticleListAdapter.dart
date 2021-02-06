@@ -12,5 +12,10 @@ class ArticleListAdapter extends BaseListViewAdapter<ArticleRes> {
   }
 
   @override
-  Widget covertWidget(int index, ArticleRes t) {}
+  Widget covertWidget(int index, ArticleRes t) {
+    if (t.type == 1)
+      return Text("置顶文章" + t.title);
+    else
+      return Text(t.title);
+  }
 }

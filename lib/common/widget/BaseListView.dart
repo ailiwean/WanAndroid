@@ -21,6 +21,7 @@ abstract class BaseListViewAdapter<T> {
   List<Widget> _headWidgets = [];
   List<Widget> _bottomWidgets = [];
   _BaseListViewState _holder;
+  List<Function> _buildBeforeback = [];
 
   bindStateWidget(_BaseListViewState state) {
     this._holder = state;
@@ -66,7 +67,7 @@ abstract class BaseListViewAdapter<T> {
     _update();
   }
 
-  void addData(List<T> data, {insert = -1, needUpdate = true}) {
+  void addData(Iterable<T> data, {insert = -1, needUpdate = true}) {
     if (insert != -1)
       dataList.insertAll(insert, data);
     else
@@ -84,10 +85,15 @@ abstract class BaseListViewAdapter<T> {
     if (needUpdate) _update();
   }
 
-  void setNewData(List<T> data, {needUpdate = true}) {
+  void setNewData(Iterable<T> data, {needUpdate = true}) {
     dataList.clear();
-    dataList.addAll(dataList);
+    dataList.addAll(data);
     if (needUpdate) _update();
+  }
+
+  //注册一个WidgetState build前的回调，该回调表示已经准备完毕可以进行UI操作
+  void registerBuildBeforeback(Function function) {
+    _buildBeforeback.add(function);
   }
 
   void _update() {
@@ -131,6 +137,10 @@ class _BaseListViewState extends State<BaseListView> {
 
   @override
   Widget build(BuildContext context) {
+    //回调注册的监听
+    baseListViewAdapter._buildBeforeback.forEach((element) {
+      element();
+    });
     return ListView.builder(
       shrinkWrap: true,
       itemCount: baseListViewAdapter._realItemCount(),

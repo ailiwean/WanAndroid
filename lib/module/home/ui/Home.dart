@@ -3,12 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wan_android/common/native/Native.dart';
 import 'package:wan_android/common/native/NativeChannel.dart';
+import 'package:wan_android/common/network/Network.dart';
 import 'package:wan_android/common/route/RouteManager.dart';
 import 'package:wan_android/common/utils/ToastUtils.dart';
 import 'package:wan_android/common/widget/BaseListView.dart';
 import 'package:wan_android/common/widget/EasyRefreshWrap.dart';
 import 'package:wan_android/common/widget/WebViewWrap.dart';
 import 'package:wan_android/module/RootPage.dart';
+import 'package:wan_android/module/home/api/HomeApi.dart';
+import 'package:wan_android/module/home/bean/res/ArticlePageRes.dart';
+import 'package:wan_android/module/home/bean/res/ArticleRes.dart';
 import 'package:wan_android/module/home/ui/HomeSearch.dart';
 import 'package:wan_android/module/home/widget/ArticleListAdapter.dart';
 import 'package:wan_android/res/AppColors.dart';
@@ -32,10 +36,11 @@ class Home extends StatefulWidget with RootPage {
 }
 
 class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
-  BaseListViewAdapter _adapter;
+  ArticleListAdapter _adapter;
 
   @override
   void initState() {
+    super.initState();
     _adapter = ArticleListAdapter();
   }
 
@@ -78,10 +83,31 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
         ),
         body: EasyRefreshWrap(
           baseListView: BaseListView(
-            adapter: this._adapter,
+            adapter: _adapter,
           ),
-          requestFun: () {},
+          dataControl: DataControl(),
+          requestFun: (page, result) {
+        //    if (page == 0) _loadArticleTopList();
+            _loadArticlePageList(page, result);
+          },
         ));
+  }
+
+  //请求文章分页数据
+  _loadArticlePageList(page, result) {
+    //请求page
+    Network.execute(arricleList(page)).then((value) {
+      result(ArticlePageRes.fromJson(value).data);
+    });
+  }
+
+  //请求文章置顶数据
+  _loadArticleTopList() {
+    //请求page
+    Network.executeList(articleTop()).then((value) {
+      //置顶文章插入到头部
+      _adapter.addData(value.map((e) => ArticleRes.fromJson(e)), insert: 0);
+    });
   }
 
   //二维码结果分析跳转

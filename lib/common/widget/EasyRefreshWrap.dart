@@ -5,7 +5,7 @@ import 'package:wan_android/common/widget/BaseListView.dart';
 /// @Author: SWY
 /// @Date: 2021/2/4 18:56
 class EasyRefreshWrap extends EasyRefresh {
-  final requestFun;
+  final RequestFun requestFun;
   final DataControl dataControl;
 
   EasyRefreshWrap(
@@ -40,18 +40,19 @@ class DataControl {
 
   EasyRefreshController _controller = EasyRefreshController();
 
-  bindView(BaseListView baseListViewm, dynamic requestFun) {
+  bindView(BaseListView baseListView, dynamic requestFun) {
     this.baseListView = baseListView;
     this.requestFun = requestFun;
     this.resultReceive = (List<dynamic> dataList) {
       if (dataList == null) return;
-
       if (isRefreshState) {
         // 下拉刷新成功
         currentPage = 0;
         isloadComplete = false;
         baseListView.adapter.setNewData(dataList);
         _controller.finishRefresh(success: true);
+        _controller.resetLoadState();
+        _controller.resetRefreshState();
         return;
       }
 
@@ -66,6 +67,11 @@ class DataControl {
         _controller.finishLoad(success: true);
       }
     };
+
+    //注册一个需要首次加载的回调
+    baseListView.adapter.registerBuildBeforeback(() {
+      if (currentPage == -1) _controller.callRefresh();
+    });
   }
 
   OnRefreshCallback _getOnRefreshback() {
@@ -97,7 +103,7 @@ class DataControl {
 }
 
 //由内部实现，外部获取到数据后调用
-typedef resultReceive = Function(List<dynamic> dataList);
+typedef ResultReceive = Function(List<dynamic> dataList);
 
 //由外部实现内部调用， 外部根据page获取到对应的数据，通过resultReceive传递进来
-typedef requestFun = Function(int page, resultReceive);
+typedef RequestFun = Function(int page, ResultReceive);
