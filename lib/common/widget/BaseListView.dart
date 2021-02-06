@@ -84,6 +84,12 @@ abstract class BaseListViewAdapter<T> {
     if (needUpdate) _update();
   }
 
+  void setNewData(List<T> data, {needUpdate = true}) {
+    dataList.clear();
+    dataList.addAll(dataList);
+    if (needUpdate) _update();
+  }
+
   void _update() {
     if (_holder != null) {
       _holder.update();

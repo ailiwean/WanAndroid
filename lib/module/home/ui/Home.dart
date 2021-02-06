@@ -32,6 +32,13 @@ class Home extends StatefulWidget with RootPage {
 }
 
 class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
+  BaseListViewAdapter _adapter;
+
+  @override
+  void initState() {
+    _adapter = ArticleListAdapter();
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -70,9 +77,10 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
           ],
         ),
         body: EasyRefreshWrap(
-          child: BaseListView(
-            adapter: ArticleListAdapter(),
+          baseListView: BaseListView(
+            adapter: this._adapter,
           ),
+          requestFun: () {},
         ));
   }
 
