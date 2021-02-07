@@ -37,10 +37,14 @@ class Home extends StatefulWidget with RootPage {
 class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   ArticleListAdapter _adapter;
 
+  //是否加载置顶文章
+  bool hasLoadTop = false;
+
   @override
   void initState() {
     super.initState();
     _adapter = ArticleListAdapter();
+    //ToastUtils.showToast("text")
   }
 
   @override
@@ -81,31 +85,31 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
           ],
         ),
         body: RefreshListView(
-          adapter: ArticleListAdapter(),
-          requestFun: (page, result) {
-            //    if (page == 0) _loadArticleTopList();
-            _loadArticlePageList(page, result);
+          adapter: _adapter,
+          requestFun: (page) async {
+            //先请求分页数据
+            var pageList = await _loadArticlePageList(page);
+            //第0页则向分页数据前插入置顶数据
+            if (page == 0) pageList.insertAll(0, await _loadArticleTopList());
+            return pageList;
           },
         ));
   }
 
   //请求文章分页数据
-  _loadArticlePageList(page, result) {
+  Future<List<ArticleRes>> _loadArticlePageList(page) async {
     //请求page
-    Network.execute(arricleList(page)).then((value) {
-      if (result != null) {
-        result(ArticlePageRes.fromJson(value).data);
-      }
-    });
+    ArticlePageRes pageRes =
+        ArticlePageRes.fromJson(await Network.execute(arricleList(page)));
+    return pageRes.data;
   }
 
   //请求文章置顶数据
-  _loadArticleTopList() {
-    //请求page
-    Network.executeList(articleTop()).then((value) {
-      //置顶文章插入到头部
-      _adapter.addData(value.map((e) => ArticleRes.fromJson(e)), insert: 0);
-    });
+  Future<List<ArticleRes>> _loadArticleTopList() async {
+    List<ArticleRes> resultList = [];
+    resultList.addAll((await Network.executeList(articleTop()))
+        .map((e) => ArticleRes.fromJson(e)));
+    return resultList;
   }
 
   //二维码结果分析跳转

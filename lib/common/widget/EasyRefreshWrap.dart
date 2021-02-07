@@ -56,7 +56,7 @@ class DataControl {
         listViewDelegate.adapter.setNewData(dataList);
         _controller.finishRefresh(success: true);
         _controller.resetLoadState();
-        _controller.resetRefreshState();
+        // _controller.resetRefreshState();
         return;
       }
 
@@ -74,25 +74,25 @@ class DataControl {
   }
 
   OnRefreshCallback _getOnRefreshback() {
-    return () {
+    return () async {
       isRefreshState = true;
       //请求第0页数据
-      requestFun(0, resultReceive);
-      return null;
+      resultReceive(await requestFun(0));
+      return;
     };
   }
 
   OnLoadCallback _getOnLoadback() {
-    return () {
+    return () async {
       isRefreshState = false;
       //已经加载完成直接回调
       if (isloadComplete) {
         _controller.finishLoad(success: true, noMore: true);
-        return null;
+        return;
       }
       //请求下页数据
-      requestFun(currentPage + 1, resultReceive);
-      return null;
+      resultReceive(await requestFun(currentPage + 1));
+      return;
     };
   }
 
@@ -104,5 +104,5 @@ class DataControl {
 //由内部实现，外部获取到数据后调用
 typedef ResultReceive = Function(List<dynamic> dataList);
 
-//由外部实现内部调用， 外部根据page获取到对应的数据，通过resultReceive传递进来
-typedef RequestFun = Function(int page, ResultReceive);
+//由外部实现内部调用， 外部根据page获取到对应的数据
+typedef RequestFun = Future<List<dynamic>> Function(int page);

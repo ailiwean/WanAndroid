@@ -113,6 +113,11 @@ abstract class BaseListViewAdapter<T> {
     if (needUpdate) _update();
   }
 
+  void removeWhere(bool test(T t), {needUpdate = true}) {
+    dataList.removeWhere((element) => test(element));
+    if (needUpdate) _update();
+  }
+
   void removeItem(int index, {needUpdate = true}) {
     dataList.remove(index);
     if (needUpdate) _update();

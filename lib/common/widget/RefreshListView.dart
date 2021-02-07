@@ -37,6 +37,9 @@ class _RefreshListViewState extends State<RefreshListView>
   ListViewDelegate delegate;
   EasyRefreshGen refreshGen;
 
+  ///内部维护分页信息
+  DataControl dataControl = DataControl();
+
   _RefreshListViewState({
     this.adapter,
     this.requestFun,
@@ -52,7 +55,7 @@ class _RefreshListViewState extends State<RefreshListView>
     else
       return EasyRefreshWrap(
         listViewDelegate: delegate,
-        dataControl: DataControl(),
+        dataControl: dataControl,
         requestFun: this.requestFun,
       );
   }

@@ -48,6 +48,7 @@ class _HomeBannerState extends State<HomeBanner>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     startTimingTask();
     return AspectRatio(
         aspectRatio: 1 / 0.6,
@@ -87,6 +88,7 @@ class _HomeBannerState extends State<HomeBanner>
 
   @override
   void dispose() {
+    super.dispose();
     timer.cancel();
   }
 
