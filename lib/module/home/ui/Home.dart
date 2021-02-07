@@ -6,8 +6,7 @@ import 'package:wan_android/common/native/NativeChannel.dart';
 import 'package:wan_android/common/network/Network.dart';
 import 'package:wan_android/common/route/RouteManager.dart';
 import 'package:wan_android/common/utils/ToastUtils.dart';
-import 'package:wan_android/common/widget/BaseListView.dart';
-import 'package:wan_android/common/widget/EasyRefreshWrap.dart';
+import 'package:wan_android/common/widget/RefreshListView.dart';
 import 'package:wan_android/common/widget/WebViewWrap.dart';
 import 'package:wan_android/module/RootPage.dart';
 import 'package:wan_android/module/home/api/HomeApi.dart';
@@ -81,13 +80,10 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
             )
           ],
         ),
-        body: EasyRefreshWrap(
-          baseListView: BaseListView(
-            adapter: _adapter,
-          ),
-          dataControl: DataControl(),
+        body: RefreshListView(
+          adapter: ArticleListAdapter(),
           requestFun: (page, result) {
-        //    if (page == 0) _loadArticleTopList();
+            //    if (page == 0) _loadArticleTopList();
             _loadArticlePageList(page, result);
           },
         ));
@@ -97,7 +93,9 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   _loadArticlePageList(page, result) {
     //请求page
     Network.execute(arricleList(page)).then((value) {
-      result(ArticlePageRes.fromJson(value).data);
+      if (result != null) {
+        result(ArticlePageRes.fromJson(value).data);
+      }
     });
   }
 

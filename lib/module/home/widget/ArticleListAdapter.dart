@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wan_android/common/widget/BaseListView.dart';
+import 'package:wan_android/common/widget/ListViewDelegate.dart';
 import 'package:wan_android/module/home/bean/res/ArticleRes.dart';
 import 'package:wan_android/module/home/widget/HomeBanner.dart';
 
@@ -14,8 +14,8 @@ class ArticleListAdapter extends BaseListViewAdapter<ArticleRes> {
   @override
   Widget covertWidget(int index, ArticleRes t) {
     if (t.type == 1)
-      return Text("置顶文章" + t.title);
+      return Container(width: 500, height: 100, child: Text("置顶文章" + t.title));
     else
-      return Text(t.title);
+      return Container(width: 500, height: 100, child: Text(t.title));
   }
 }

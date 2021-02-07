@@ -15,14 +15,15 @@ class HomeBanner extends StatefulWidget {
   _HomeBannerState createState() => _HomeBannerState();
 }
 
-class _HomeBannerState extends State<HomeBanner> {
+class _HomeBannerState extends State<HomeBanner>
+    with AutomaticKeepAliveClientMixin {
   //当前page下标
-  var currentIndex = 0;
+  static var currentIndex = maxPageNum ~/ 2;
 
-  int maxPageNum = 100000;
+  static int maxPageNum = 100000;
 
   //page页数据
-  List<BannerRes> pageDataList = [];
+  static List<BannerRes> pageDataList = [];
 
   PageController _pageController;
 
@@ -31,7 +32,7 @@ class _HomeBannerState extends State<HomeBanner> {
   @override
   void initState() {
     super.initState();
-    _postBannerData();
+    if (pageDataList.isEmpty) _postBannerData();
     _pageController = _getPageController();
   }
 
@@ -41,19 +42,19 @@ class _HomeBannerState extends State<HomeBanner> {
       setState(() {
         pageDataList.clear();
         pageDataList.addAll(value.map((e) => BannerRes.fromJson(e)));
-        startTimingTask();
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    startTimingTask();
     return AspectRatio(
         aspectRatio: 1 / 0.6,
         child: PageView.builder(
           controller: _pageController,
           onPageChanged: (current) {
-            this.currentIndex = current;
+            _HomeBannerState.currentIndex = current;
           },
           itemCount: maxPageNum,
           itemBuilder: (BuildContext context, int index) {
@@ -84,6 +85,11 @@ class _HomeBannerState extends State<HomeBanner> {
         ));
   }
 
+  @override
+  void dispose() {
+    timer.cancel();
+  }
+
   _getCahceNetImage(int index) {
     return Image(
         image: CachedNetworkImageProvider(
@@ -92,6 +98,7 @@ class _HomeBannerState extends State<HomeBanner> {
 
   startTimingTask() {
     if (timer != null) return;
+    if (pageDataList.isEmpty) return;
     timer = Timer.periodic(Duration(seconds: 5), (Timer timer) {
       _pageController.animateToPage((_pageController.page + 1).toInt(),
           duration: pageSwitchDuration, curve: Curves.ease);
@@ -104,6 +111,9 @@ class _HomeBannerState extends State<HomeBanner> {
   }
 
   PageController _getPageController() {
-    return PageController(initialPage: maxPageNum ~/ 2);
+    return PageController(initialPage: _HomeBannerState.currentIndex);
   }
+
+  @override
+  bool get wantKeepAlive => false;
 }

@@ -1,5 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:wan_android/common/widget/BaseListView.dart';
+import 'package:wan_android/common/widget/ListViewDelegate.dart';
 
 /// 下拉刷新上拉加载内部维护pagesize
 /// @Author: SWY
@@ -8,17 +9,19 @@ class EasyRefreshWrap extends EasyRefresh {
   final RequestFun requestFun;
   final DataControl dataControl;
 
-  EasyRefreshWrap(
-      {BaseListView baseListView, this.dataControl, this.requestFun})
-      : super(
-          child: baseListView,
-          onRefresh: dataControl._getOnRefreshback(),
-          onLoad: dataControl._getOnLoadback(),
-          enableControlFinishLoad: true,
-          enableControlFinishRefresh: true,
-          controller: dataControl._getController(),
-        ) {
-    dataControl.bindView(baseListView, requestFun);
+  EasyRefreshWrap({
+    @required ListViewDelegate listViewDelegate,
+    @required this.requestFun,
+    this.dataControl,
+  }) : super(
+            child: listViewDelegate.getListView(),
+            onRefresh: dataControl._getOnRefreshback(),
+            onLoad: dataControl._getOnLoadback(),
+            enableControlFinishLoad: true,
+            enableControlFinishRefresh: true,
+            controller: dataControl._getController(),
+            firstRefresh: true) {
+    dataControl.bindView(listViewDelegate, requestFun);
   }
 }
 
@@ -34,22 +37,23 @@ class DataControl {
   //当前请求是否为下拉刷新，为避免出错导致currentPage数据丢失单独用变量控制
   bool isRefreshState = false;
 
-  BaseListView baseListView;
+  ListViewDelegate listViewDelegate;
   dynamic requestFun;
   dynamic resultReceive;
 
   EasyRefreshController _controller = EasyRefreshController();
 
-  bindView(BaseListView baseListView, dynamic requestFun) {
-    this.baseListView = baseListView;
+  bindView(ListViewDelegate listViewDelegate, dynamic requestFun) {
+    this.listViewDelegate = listViewDelegate;
     this.requestFun = requestFun;
     this.resultReceive = (List<dynamic> dataList) {
       if (dataList == null) return;
+
       if (isRefreshState) {
         // 下拉刷新成功
         currentPage = 0;
         isloadComplete = false;
-        baseListView.adapter.setNewData(dataList);
+        listViewDelegate.adapter.setNewData(dataList);
         _controller.finishRefresh(success: true);
         _controller.resetLoadState();
         _controller.resetRefreshState();
@@ -57,21 +61,16 @@ class DataControl {
       }
 
       currentPage++;
-      baseListView.adapter.addData(dataList);
+      listViewDelegate.adapter.addData(dataList);
 
       //上拉加载成功, 且无更多数据
-      if (dataList.length < pageNum) {
+      if (dataList.length == 0) {
         isloadComplete = true;
         _controller.finishLoad(success: true, noMore: true);
       } else {
         _controller.finishLoad(success: true);
       }
     };
-
-    //注册一个需要首次加载的回调
-    baseListView.adapter.registerBuildBeforeback(() {
-      if (currentPage == -1) _controller.callRefresh();
-    });
   }
 
   OnRefreshCallback _getOnRefreshback() {
