@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:wan_android/common/widget/EasyRefreshWrap.dart';
 import 'package:wan_android/common/widget/ListViewDelegate.dart';
 
@@ -57,6 +58,10 @@ class _RefreshListViewState extends State<RefreshListView>
         listViewDelegate: delegate,
         dataControl: dataControl,
         requestFun: this.requestFun,
+        header: MaterialHeader(
+            completeDuration: Duration(milliseconds: 500),
+            enableHapticFeedback: true),
+        footer: MaterialFooter(),
       );
   }
 

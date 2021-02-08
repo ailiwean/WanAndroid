@@ -5,7 +5,7 @@ import 'package:wan_android/common/native/Native.dart';
 import 'package:wan_android/common/native/NativeChannel.dart';
 import 'package:wan_android/common/network/Network.dart';
 import 'package:wan_android/common/route/RouteManager.dart';
-import 'package:wan_android/common/utils/ToastUtils.dart';
+import 'package:wan_android/common/utils/AppToastUtils.dart';
 import 'package:wan_android/common/widget/RefreshListView.dart';
 import 'package:wan_android/common/widget/WebViewWrap.dart';
 import 'package:wan_android/module/RootPage.dart';
@@ -123,7 +123,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
     launch(text).catchError((dynamic) {
       //普通文本复制到剪贴板
       Clipboard.setData(ClipboardData(text: text));
-      ToastUtils.showToast("内容已复制到剪切板");
+      AppToastUtils.showToast("内容已复制到剪切板");
     }).then((value) {});
   }
 

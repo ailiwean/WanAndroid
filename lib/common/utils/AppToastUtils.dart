@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wan_android/res/AppColors.dart';
 
-class ToastUtils {
+class AppToastUtils {
   static init(BuildContext buildContext) {}
 
   static showToast(String text) {

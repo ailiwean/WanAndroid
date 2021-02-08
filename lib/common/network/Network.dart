@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:wan_android/common/network/BaseApi.dart';
 import 'package:wan_android/common/network/BaseResponse.dart';
-import 'package:wan_android/common/utils/ToastUtils.dart';
+import 'package:wan_android/common/utils/AppToastUtils.dart';
 
 /// 网络请求
 /// @Author: SWY
@@ -92,7 +92,7 @@ class Network {
       _succesInfoOutput(value);
       var response = BaseResponse.fromJson(value.data);
       if (response.errorCode == 0) return value.data["data"];
-      ToastUtils.showToast(response.errorMsg);
+      AppToastUtils.showToast(response.errorMsg);
       throw response.errorMsg;
     });
   }

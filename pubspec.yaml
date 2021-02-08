@@ -32,6 +32,8 @@ dependencies:
   flutter_easyrefresh: ^2.1.8
   flutter_inappwebview: ^4.0.0+4
   url_launcher: ^5.7.10
+  flutter_screenutil: ^4.0.2
+
 
 dev_dependencies:
   flutter_test:

@@ -12,4 +12,13 @@ class AppColors {
 
   //主题色
   static final primaryColor = Colors.white;
+
+  //标记颜色
+  static final signColor = Colors.red;
+
+  //正文颜色
+  static final textContentColor = Colors.black54;
+
+  //标题颜色
+  static final textTitleColor = Colors.black87;
 }

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/screenutil_init.dart';
 import 'package:wan_android/SplashPage.dart';
 import 'package:wan_android/common/route/RouteManager.dart';
 import 'package:wan_android/common/utils/AppBarUtils.dart';
-import 'package:wan_android/common/utils/ToastUtils.dart';
+import 'package:wan_android/common/utils/AppToastUtils.dart';
 import 'package:wan_android/res/AppColors.dart';
 
 import 'common/network/Network.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ScreenUtilInit(
+      builder: () => MyApp(),
+      allowFontScaling: true,
+      designSize: Size(720, 1280)));
 }
 
 class MyApp extends StatelessWidget {
@@ -30,7 +34,7 @@ class MyApp extends StatelessWidget {
     statusOverLayerBar();
 
     //Toast
-    ToastUtils.init(context);
+    AppToastUtils.init(context);
 
     //网络请求库初始化
     Network.build()

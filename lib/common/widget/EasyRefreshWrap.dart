@@ -13,6 +13,8 @@ class EasyRefreshWrap extends EasyRefresh {
     @required ListViewDelegate listViewDelegate,
     @required this.requestFun,
     this.dataControl,
+    Header header,
+    Footer footer,
   }) : super(
             child: listViewDelegate.getListView(),
             onRefresh: dataControl._getOnRefreshback(),
@@ -20,6 +22,8 @@ class EasyRefreshWrap extends EasyRefresh {
             enableControlFinishLoad: true,
             enableControlFinishRefresh: true,
             controller: dataControl._getController(),
+            header: header,
+            footer: footer,
             firstRefresh: true) {
     dataControl.bindView(listViewDelegate, requestFun);
   }
