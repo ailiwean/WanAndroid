@@ -1,6 +1,3 @@
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:wan_android/common/utils/AppToastUtils.dart';
-
 /// @Description: 字符串正则处理
 /// @Author: SWY
 /// @Date: 2021/2/9 22:49
@@ -13,6 +10,8 @@ class AppRegUtils {
   static RegExp styleRegExp = RegExp("<style[^>]*?>[\\s\\S]*?<\\/style>");
 
   static RegExp htmlRegExp = RegExp("<[^>]+>");
+
+  static RegExp clearCharsetRegExp = RegExp("&[\\w]*;");
 
   // 匹配字符串是否为uri
   static bool isMatchUri(String ori) {
@@ -32,10 +31,13 @@ class AppRegUtils {
         .replaceAll("&quot;", "\"")
         .replaceAll("&apos;", "'")
         .replaceAll("&copy;", "©")
-        .replaceAll("®", "&reg;")
-        .replaceAll("©", "&copy;")
-        .replaceAll("™", "&trade;")
-        .replaceAll("×", "&times;")
-        .replaceAll("÷", "&divide;");
+        .replaceAll("&reg;", "®")
+        .replaceAll("&copy;", "©")
+        .replaceAll("&trade;", "™")
+        .replaceAll("&times;", "×")
+        .replaceAll("&divide;", "÷")
+        .replaceAll("&middot;", ".")
+        .replaceAll("\n", "")
+        .replaceAll(clearCharsetRegExp, "");
   }
 }

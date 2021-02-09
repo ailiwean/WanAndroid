@@ -6,6 +6,7 @@ import 'package:wan_android/common/utils/AppRegUtils.dart';
 import 'package:wan_android/common/utils/AppScreen.dart';
 import 'package:wan_android/module/home/bean/res/ArticleRes.dart';
 import 'package:wan_android/res/AppColors.dart';
+import 'package:wan_android/res/Style.dart';
 
 ///文章带图片item
 class ArticleImgItemWidget extends StatelessWidget {
@@ -40,11 +41,7 @@ class ArticleImgItemWidget extends StatelessWidget {
             border: Border.all(color: AppColors.signColor, width: 1),
             borderRadius: BorderRadius.all(Radius.circular(5))),
       ));
-      widthList.add(Placeholder(
-        color: Colors.transparent,
-        fallbackWidth: setSuitWidthPx(10),
-        fallbackHeight: setSuitWidthPx(10),
-      ));
+      widthList.add(Style.widthPlaceHolder(10));
     });
     return widthList;
   }
@@ -122,33 +119,33 @@ class ArticleImgItemWidget extends StatelessWidget {
           Text(
             AppRegUtils.deleteJsH5Text(articleRes.title),
             overflow: TextOverflow.ellipsis,
-            maxLines: 1,
+            maxLines: articleRes.desc.isEmpty ? 2 : 1,
             textAlign: TextAlign.left,
             style: TextStyle(
                 color: AppColors.textTitleColor, fontSize: setSuitTextPx(26)),
           ),
-          Placeholder(
-            color: Colors.transparent,
-            fallbackHeight: setSuitHeightPx(10),
-          ),
-          Text(
-            AppRegUtils.deleteJsH5Text(articleRes.desc),
-            maxLines: 3,
-            textAlign: TextAlign.left,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-                color: AppColors.textContentColor, fontSize: setSuitTextPx(22)),
-          )
+          if (articleRes.desc.isNotEmpty) Style.heightPlaceHolder(10),
+          if (articleRes.desc.isNotEmpty)
+            Text(
+              AppRegUtils.deleteJsH5Text(articleRes.desc),
+              maxLines: 3,
+              textAlign: TextAlign.left,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  color: AppColors.textContentColor,
+                  fontSize: setSuitTextPx(22)),
+            )
         ],
       ),
     ));
 
     return Padding(
         padding: EdgeInsets.only(
-            left: setSuitWidthPx(20),
-            top: setSuitWidthPx(10),
-            right: setSuitWidthPx(20),
-            bottom: setSuitWidthPx(5)),
+          left: setSuitWidthPx(20),
+          top: setSuitWidthPx(10),
+          bottom: setSuitHeightPx(0),
+          right: setSuitWidthPx(20),
+        ),
         child: AspectRatio(
           aspectRatio: 16 / 4,
           child: Row(
@@ -163,12 +160,29 @@ class ArticleImgItemWidget extends StatelessWidget {
   Widget getBottomWidget() {
     List<Widget> child = [];
 
+    //1 为置顶文章
+    if (articleRes.type == 1) {
+      child.add(Text(
+        "置顶",
+        style: TextStyle(
+            color: AppColors.navigatorItemSelectColor,
+            fontSize: setSuitTextPx(20)),
+      ));
+      child.add(Style.widthPlaceHolder(10));
+    }
+    //详细分组
+    child.add(Text(
+      articleRes.chapterName + " • " + articleRes.superChapterName,
+      style: TextStyle(
+          color: AppColors.textContentDescColor, fontSize: setSuitTextPx(20)),
+    ));
+
     return Padding(
       padding: EdgeInsets.only(
           left: setSuitWidthPx(20),
-          top: setSuitWidthPx(5),
+          top: setSuitWidthPx(10),
           right: setSuitWidthPx(20),
-          bottom: setSuitWidthPx(5)),
+          bottom: setSuitWidthPx(25)),
       child: Row(
         children: child,
         mainAxisAlignment: MainAxisAlignment.start,
