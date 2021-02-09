@@ -16,8 +16,11 @@ class AppColors {
   //标记颜色
   static final signColor = Colors.red;
 
+  //正文备注颜色
+  static final textContentDescColor = Colors.grey;
+
   //正文颜色
-  static final textContentColor = Colors.black54;
+  static final textContentColor = Colors.black45;
 
   //标题颜色
   static final textTitleColor = Colors.black87;

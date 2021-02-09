@@ -4,6 +4,6 @@
 class AppDateUtils {
   /// 获取距离当前日期往前的时间戳
   static int getNowBeforeDurtion(Duration duration) {
-    return DateTime.now().millisecond - duration.inMilliseconds;
+    return DateTime.now().millisecondsSinceEpoch - duration.inMilliseconds;
   }
 }

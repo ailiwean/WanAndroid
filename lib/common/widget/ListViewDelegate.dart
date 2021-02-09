@@ -44,10 +44,12 @@ abstract class BaseListViewAdapter<T> {
   List<Widget> _headWidgets = [];
   List<Widget> _bottomWidgets = [];
   State _state;
+  BuildContext _context;
 
   /// 由[RefreshListView]内 [State]调用，存储一个State用于实时刷新
   bindStateWidget(State state) {
     this._state = state;
+    this._context = _state.context;
   }
 
   /// ListView内部调用，Adapter将数据转换成Widget
@@ -98,6 +100,8 @@ abstract class BaseListViewAdapter<T> {
   List<Widget> get headWidgets => _headWidgets;
 
   List<Widget> get bottomWidgets => _bottomWidgets;
+
+  BuildContext get context => _context;
 
   /// 添加数据
   void addData(Iterable<T> data, {insert = -1, needUpdate = true}) {
