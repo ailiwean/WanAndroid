@@ -4,7 +4,7 @@ import 'package:wan_android/common/utils/AppScreen.dart';
 class Style {
   // 用于子控件点击事件，  无背景无边距
   static ButtonStyle transButtonStyle = ButtonStyle(
-      overlayColor: MaterialStateProperty.all(Colors.lightGreenAccent),
+      overlayColor: MaterialStateProperty.all(Colors.black12),
       backgroundColor: MaterialStateProperty.all(Colors.transparent),
       shadowColor: MaterialStateProperty.all(Colors.transparent),
       tapTargetSize: MaterialTapTargetSize.shrinkWrap,

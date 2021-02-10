@@ -65,7 +65,7 @@ class _HomeBannerState extends State<HomeBanner>
               return Listener(
                 child: ElevatedButton(
                   style: Style.transButtonStyle,
-                  child: _getCahceNetImage(index),
+                  child: _getCacheNetImage(index),
                   onPressed: () {
                     setState(() {
                       RouteManager.startPage(context, WebViewWrap, argusments: {
@@ -92,10 +92,12 @@ class _HomeBannerState extends State<HomeBanner>
     timer.cancel();
   }
 
-  _getCahceNetImage(int index) {
+  _getCacheNetImage(int index) {
     return Image(
-        image: CachedNetworkImageProvider(
-            pageDataList[index % pageDataList.length].imagePath));
+      image: CachedNetworkImageProvider(
+          pageDataList[index % pageDataList.length].imagePath),
+      fit: BoxFit.cover,
+    );
   }
 
   startTimingTask() {
