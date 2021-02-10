@@ -17,11 +17,12 @@ class RefreshListView extends StatefulWidget {
   final EasyRefreshGen refreshGen;
 
   RefreshListView({
+    Key key,
     @required this.adapter,
     @required this.requestFun,
     this.refreshGen,
     this.delegate,
-  });
+  }) : super(key: key);
 
   @override
   _RefreshListViewState createState() => _RefreshListViewState(

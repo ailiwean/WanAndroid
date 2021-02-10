@@ -15,7 +15,7 @@ class WebViewWrap extends StatefulWidget {
   final url;
   final arguments;
 
-  WebViewWrap({this.url, this.arguments});
+  WebViewWrap({Key key, this.url, this.arguments}) : super(key: key);
 
   @override
   _WebViewWrapState createState() =>
@@ -91,7 +91,9 @@ class _WebViewWrapState extends State<WebViewWrap> {
                       Icons.more_vert,
                       color: AppColors.comIconColor,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      showMenuClick();
+                    },
                   )),
             ],
           ),
@@ -170,6 +172,19 @@ class _WebViewWrapState extends State<WebViewWrap> {
             backgroundColor: Colors.white70,
             valueColor: animation)
         : Container();
+  }
+
+  void showMenuClick() {
+    showMenu(
+        context: context,
+        position: RelativeRect.fromLTRB(100, 100, 100, 100),
+        items: <PopupMenuEntry>[
+          PopupMenuItem(child: Text("刷新")),
+          PopupMenuItem(child: Text("浏览器打开")),
+          PopupMenuItem(child: Text("复制链接")),
+          PopupMenuItem(child: Text("收藏")),
+          PopupMenuItem(child: Text("分享")),
+        ]);
   }
 }
 

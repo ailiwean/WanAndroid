@@ -13,9 +13,6 @@ import 'package:wan_android/common/utils/AppRegUtils.dart';
 /// @Author: SWY
 /// @Date: 2021/2/6 5:47
 class ArticleListAdapter extends BaseListViewAdapter<ArticleRes> {
-  ArticleListAdapter() {
-    addHeadWidget(HomeBanner());
-  }
 
   @override
   Widget covertWidget(int index, ArticleRes t) {

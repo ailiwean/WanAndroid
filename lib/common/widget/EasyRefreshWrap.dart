@@ -10,12 +10,14 @@ class EasyRefreshWrap extends EasyRefresh {
   final DataControl dataControl;
 
   EasyRefreshWrap({
+    Key key,
     @required ListViewDelegate listViewDelegate,
     @required this.requestFun,
     this.dataControl,
     Header header,
     Footer footer,
   }) : super(
+            key: key,
             child: listViewDelegate.getListView(),
             onRefresh: dataControl._getOnRefreshback(),
             onLoad: dataControl._getOnLoadback(),

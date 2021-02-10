@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:wan_android/common/network/Network.dart';
+import 'package:wan_android/common/widget/RefreshListView.dart';
 import 'package:wan_android/module/RootPage.dart';
+import 'package:wan_android/module/home/bean/res/ArticlePageRes.dart';
+import 'package:wan_android/module/home/widget/ArticleListAdapter.dart';
+import 'package:wan_android/module/qa/api/QaApi.dart';
 
 class Qa extends StatefulWidget with RootPage {
   static String pageName = "问答";
@@ -26,6 +31,13 @@ class _QaState extends State<Qa> with AutomaticKeepAliveClientMixin {
       appBar: AppBar(
         centerTitle: true,
         title: Text(Qa.pageName),
+      ),
+      body: RefreshListView(
+        adapter: ArticleListAdapter(),
+        requestFun: (int page) async {
+          return ArticlePageRes.fromJson(await Network.execute(qaList(page)))
+              .data;
+        },
       ),
     );
   }

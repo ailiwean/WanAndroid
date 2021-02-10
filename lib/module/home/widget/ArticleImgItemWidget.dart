@@ -177,6 +177,24 @@ class ArticleImgItemWidget extends StatelessWidget {
           color: AppColors.textContentDescColor, fontSize: setSuitTextPx(20)),
     ));
 
+    child.add(Expanded(
+      child: Container(),
+    ));
+
+    if (articleRes.zan != 0) {
+      child.add(Padding(
+          padding: EdgeInsets.only(right: setSuitWidthPx(5)),
+          child: Icon(
+            Icons.thumb_up,
+            size: setSuitWidthPx(25),
+            color: AppColors.textContentDescColor,
+          )));
+      child.add(Text(
+        articleRes.zan.toString(),
+        style: TextStyle(
+            color: AppColors.textContentDescColor, fontSize: setSuitTextPx(20)),
+      ));
+    }
     return Padding(
       padding: EdgeInsets.only(
           left: setSuitWidthPx(20),

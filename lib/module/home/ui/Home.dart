@@ -14,6 +14,7 @@ import 'package:wan_android/module/home/bean/res/ArticlePageRes.dart';
 import 'package:wan_android/module/home/bean/res/ArticleRes.dart';
 import 'package:wan_android/module/home/ui/HomeSearch.dart';
 import 'package:wan_android/module/home/widget/ArticleListAdapter.dart';
+import 'package:wan_android/module/home/widget/HomeBanner.dart';
 import 'package:wan_android/res/AppColors.dart';
 import 'package:wan_android/res/Style.dart';
 
@@ -44,7 +45,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   void initState() {
     super.initState();
     _adapter = ArticleListAdapter();
-    //ToastUtils.showToast("text")
+    _adapter.addHeadWidget(HomeBanner());
   }
 
   @override
