@@ -2,9 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wan_android/common/route/RouteManager.dart';
+import 'package:wan_android/common/utils/AppBarUtils.dart';
+import 'package:wan_android/common/utils/AppToastUtils.dart';
 import 'package:wan_android/res/AppColors.dart';
 import 'package:wan_android/res/Style.dart';
 
@@ -29,6 +33,8 @@ class _WebViewWrapState extends State<WebViewWrap> {
   String url;
   String title;
   double progress = 0;
+
+  AppBar appBar;
 
   _WebViewWrapState({this.url, this.title});
 
@@ -67,36 +73,37 @@ class _WebViewWrapState extends State<WebViewWrap> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-        child: Scaffold(
-          appBar: AppBar(
-            leading: ElevatedButton(
+    appBar = AppBar(
+      leading: ElevatedButton(
+        style: Style.transButtonStyle,
+        child: Icon(
+          Icons.keyboard_arrow_left_sharp,
+          color: AppColors.comIconColor,
+        ),
+        onPressed: () {
+          RouteManager.finish(context);
+        },
+      ),
+      title: Text(title,
+          overflow: TextOverflow.fade, style: TextStyle(fontSize: 16)),
+      actions: [
+        Padding(
+            padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+            child: ElevatedButton(
               style: Style.transButtonStyle,
               child: Icon(
-                Icons.keyboard_arrow_left_sharp,
+                Icons.more_vert,
                 color: AppColors.comIconColor,
               ),
               onPressed: () {
-                RouteManager.finish(context);
+                showMenuClick();
               },
-            ),
-            title: Text(title,
-                overflow: TextOverflow.fade, style: TextStyle(fontSize: 16)),
-            actions: [
-              Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                  child: ElevatedButton(
-                    style: Style.transButtonStyle,
-                    child: Icon(
-                      Icons.more_vert,
-                      color: AppColors.comIconColor,
-                    ),
-                    onPressed: () {
-                      showMenuClick();
-                    },
-                  )),
-            ],
-          ),
+            )),
+      ],
+    );
+    return WillPopScope(
+        child: Scaffold(
+          appBar: appBar,
           body: Stack(
             children: [
               FractionallySizedBox(
@@ -175,16 +182,54 @@ class _WebViewWrapState extends State<WebViewWrap> {
   }
 
   void showMenuClick() {
+    double offsetTop =
+        appBar.preferredSize.height + getStatueBarHeight(context);
+    double offsetLeft = getScreenSize(context).width;
     showMenu(
-        context: context,
-        position: RelativeRect.fromLTRB(100, 100, 100, 100),
-        items: <PopupMenuEntry>[
-          PopupMenuItem(child: Text("刷新")),
-          PopupMenuItem(child: Text("浏览器打开")),
-          PopupMenuItem(child: Text("复制链接")),
-          PopupMenuItem(child: Text("收藏")),
-          PopupMenuItem(child: Text("分享")),
-        ]);
+      context: context,
+      position: RelativeRect.fromLTRB(offsetLeft, offsetTop, 0, 0),
+      items: <PopupMenuEntry>[
+        PopupMenuItem(
+          child: Text("刷新"),
+          value: 1,
+        ),
+        PopupMenuItem(
+          child: Text("浏览器打开"),
+          value: 2,
+        ),
+        PopupMenuItem(
+          child: Text("复制链接"),
+          value: 3,
+        ),
+        PopupMenuItem(
+          child: Text("收藏"),
+          value: 4,
+        ),
+        PopupMenuItem(
+          child: Text("分享"),
+          value: 5,
+        ),
+      ],
+    ).then((value) {
+      switch (value) {
+        case 1:
+          webView.reload();
+          break;
+        case 2:
+          launch(url);
+          break;
+        case 3:
+          Clipboard.setData(ClipboardData(text: url));
+          AppToastUtils.showToast("链接已复制");
+          break;
+        case 4:
+          // TODO
+          break;
+        case 5:
+          // TODO
+          break;
+      }
+    });
   }
 }
 

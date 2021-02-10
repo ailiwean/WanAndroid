@@ -10,3 +10,15 @@ statusOverLayerBar() {
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
 }
+
+getAppBarHeight(AppBar appBar) {
+  return appBar.preferredSize.height;
+}
+
+getStatueBarHeight(BuildContext context) {
+  return MediaQuery.of(context).padding.top;
+}
+
+Size getScreenSize(BuildContext context) {
+  return MediaQuery.of(context).size;
+}
