@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:wan_android/common/route/RouteManager.dart';
 import 'package:wan_android/common/utils/AppScreen.dart';
+import 'package:wan_android/common/widget/BesselWidget.dart';
 import 'package:wan_android/generated/assets.dart';
 import 'package:wan_android/res/AppColors.dart';
 import 'package:wan_android/res/Style.dart';
@@ -51,7 +52,6 @@ class _LoginState extends State<Login> {
                 height: setSuitHeightPx(200),
                 color: Colors.white,
               )),
-
           Align(
             alignment: Alignment.center,
             child: Text(
@@ -63,7 +63,6 @@ class _LoginState extends State<Login> {
                   decoration: TextDecoration.none),
             ),
           ),
-
           Align(
             alignment: Alignment.center,
             child: Text(
@@ -74,7 +73,9 @@ class _LoginState extends State<Login> {
                   fontWeight: FontWeight.w300,
                   decoration: TextDecoration.none),
             ),
-          )
+          ),
+
+          Expanded(child: BesselWidget())
         ],
       ))
     ]);
