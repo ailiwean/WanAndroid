@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:wan_android/common/route/RouteManager.dart';
 import 'package:wan_android/common/utils/AppScreen.dart';
 import 'package:wan_android/module/RootPage.dart';
 import 'package:wan_android/module/me/widget/DayPicture.dart';
 import 'package:wan_android/res/AppColors.dart';
 import 'package:wan_android/res/Style.dart';
+import 'package:wan_android/module/me/ui/Login.dart';
 
 class Me extends StatefulWidget with RootPage {
   static String pageName = "我的";
@@ -44,23 +46,7 @@ class _MeState extends State<Me> with AutomaticKeepAliveClientMixin {
               //图片层
               DayPicture(),
               //头像
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  ClipOval(
-                    //圆形头像
-                    child: new Image.network(
-                      'https://pic2.zhimg.com/v2-639b49f2f6578eabddc458b84eb3c6a1.jpg',
-                      width: setSuitWidthPx(200),
-                    ),
-                  ),
-                  Style.heightPlaceHolder(20),
-                  Text("未登陆",
-                      style: TextStyle(
-                          fontSize: setSuitTextPx(40), color: Colors.white))
-                ],
-              )
+              _getHeadImg()
             ],
           ),
         ),
@@ -72,8 +58,35 @@ class _MeState extends State<Me> with AutomaticKeepAliveClientMixin {
         _getMenuItem(Icons.category, "开源项目", () => null),
         _getMenuItem(Icons.info, "关于作者", () => null),
         _getMenuItem(Icons.settings, "系统设置", () => null),
+        Style.heightPlaceHolder(200)
       ],
     ));
+  }
+
+  Widget _getHeadImg() {
+    return ElevatedButton(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          ClipOval(
+            //圆形头像
+            child: new Image.network(
+              'https://pic2.zhimg.com/v2-639b49f2f6578eabddc458b84eb3c6a1.jpg',
+              width: setSuitWidthPx(200),
+            ),
+          ),
+          Style.heightPlaceHolder(20),
+          Text("未登陆",
+              style:
+                  TextStyle(fontSize: setSuitTextPx(40), color: Colors.white))
+        ],
+      ),
+      style: Style.transButtonStyle,
+      onPressed: () {
+        RouteManager.startPage(context, Login);
+      },
+    );
   }
 
   Widget _getMenuItem(IconData iconData, String name, click()) {

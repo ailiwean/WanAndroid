@@ -33,7 +33,7 @@ dependencies:
   flutter_inappwebview: ^4.0.0+4
   url_launcher: ^5.7.10
   flutter_screenutil: ^4.0.2
-#  share: ^0.6.5+4
+  #  share: ^0.6.5+4
   shared_preferences: ^0.5.12+4
 
 dev_dependencies:
@@ -50,7 +50,8 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
+  assets:
+    - assets/graphics/ic_launcher.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

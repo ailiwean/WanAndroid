@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wan_android/MainPage.dart';
 import 'package:wan_android/SplashPage.dart';
@@ -8,6 +9,7 @@ import 'package:wan_android/module/home/ui/HomeSearch.dart';
 import 'package:wan_android/module/me/ui/Me.dart';
 import 'package:wan_android/module/qa/ui/Qa.dart';
 import 'package:wan_android/module/system/ui/System.dart';
+import 'package:wan_android/module/me/ui/Login.dart';
 
 ///  路由管理
 class RouteManager {
@@ -23,6 +25,7 @@ class RouteManager {
           url: arguments["url"],
           arguments: arguments,
         ),
+    getRouteName(Login): (context, {arguments}) => Login(),
   };
 
   // ignore: top_level_function_literal_block

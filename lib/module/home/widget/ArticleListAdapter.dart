@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:wan_android/common/route/RouteManager.dart';
+import 'package:wan_android/common/utils/AppRegUtils.dart';
 import 'package:wan_android/common/widget/ListViewDelegate.dart';
 import 'package:wan_android/common/widget/WebViewWrap.dart';
 import 'package:wan_android/module/home/bean/res/ArticleRes.dart';
 import 'package:wan_android/module/home/widget/ArticleImgItemWidget.dart';
 import 'package:wan_android/module/home/widget/ArticleItemWidget.dart';
-import 'package:wan_android/module/home/widget/HomeBanner.dart';
 import 'package:wan_android/res/Style.dart';
-import 'package:wan_android/common/utils/AppRegUtils.dart';
 
 /// @Description: 文章适配器
 /// @Author: SWY

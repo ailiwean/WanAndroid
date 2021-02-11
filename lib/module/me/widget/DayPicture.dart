@@ -25,7 +25,7 @@ class _DayPictureState extends State<DayPicture> {
       children: <Widget>[
         _getCacheNetImage(),
         BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
+            filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
             child: Container(color: Colors.transparent)),
       ],
       fit: StackFit.expand,
