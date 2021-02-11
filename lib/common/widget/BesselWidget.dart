@@ -28,7 +28,7 @@ class BesselPainter extends CustomPainter {
 
   initPaint() {
     _paint = Paint()
-      ..color = Color.fromARGB(255, 255, 251, 240)
+      ..color = Color.fromARGB(150, 255, 251, 240)
       ..isAntiAlias = true
       ..style = PaintingStyle.fill
       ..strokeCap = StrokeCap.round; //折线连接处圆滑处理
