@@ -95,37 +95,35 @@ class _MeState extends State<Me> with AutomaticKeepAliveClientMixin {
       onPressed: () {
         click();
       },
-      child: Card(
-        child: Padding(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Style.widthPlaceHolder(20),
-                Icon(
-                  iconData,
-                  color: AppColors.navigatorItemSelectColor,
-                ),
-                Style.widthPlaceHolder(20),
-                Expanded(
-                    child: Text(
-                  name,
-                  style: TextStyle(
-                      color: AppColors.textTitleColor,
-                      fontSize: setSuitTextPx(25)),
-                )),
-                Style.widthPlaceHolder(20),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: setSuitWidthPx(20),
-                  color: AppColors.textContentDescColor,
-                ),
-                Style.widthPlaceHolder(20),
-              ],
-            ),
-            padding: EdgeInsets.only(
-                top: setSuitHeightPx(20), bottom: setSuitHeightPx(20))),
-      ),
+      child: Padding(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Style.widthPlaceHolder(20),
+              Icon(
+                iconData,
+                color: AppColors.navigatorItemSelectColor,
+              ),
+              Style.widthPlaceHolder(20),
+              Expanded(
+                  child: Text(
+                name,
+                style: TextStyle(
+                    color: AppColors.textTitleColor,
+                    fontSize: setSuitTextPx(25)),
+              )),
+              Style.widthPlaceHolder(20),
+              Icon(
+                Icons.arrow_forward_ios,
+                size: setSuitWidthPx(20),
+                color: AppColors.textContentDescColor,
+              ),
+              Style.widthPlaceHolder(20),
+            ],
+          ),
+          padding: EdgeInsets.only(
+              top: setSuitHeightPx(20), bottom: setSuitHeightPx(20))),
     );
   }
 

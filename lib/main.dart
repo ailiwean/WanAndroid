@@ -9,8 +9,7 @@ import 'package:wan_android/res/AppColors.dart';
 import 'common/network/Network.dart';
 
 void main() {
-  runApp(
-      ScreenUtilInit(
+  runApp(ScreenUtilInit(
       builder: () => MyApp(),
       allowFontScaling: true,
       designSize: Size(720, 1280)));
