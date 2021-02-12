@@ -49,10 +49,14 @@ class Network {
   }
 
   static Future<T> _post<T>(BaseApi baseApi) {
-    return _attatchCatchError<T>(Network._network.dio.post(
-        _getUrl(baseApi) + _getHttpParams(baseApi),
-        data: baseApi.body,
-        options: Options(headers: _getMergeHeaderMap(baseApi))));
+    return _attatchCatchError<T>(
+        Network._network.dio.post(_getUrl(baseApi) + _getHttpParams(baseApi),
+            data: baseApi.isFrom != null
+                ? baseApi.isFrom
+                    ? FormData.fromMap(baseApi.body)
+                    : baseApi.body
+                : baseApi.body,
+            options: Options(headers: _getMergeHeaderMap(baseApi))));
   }
 
   static String _getUrl(BaseApi baseApi) {
@@ -100,10 +104,14 @@ class Network {
   static String _errorInfoOutput(DioError dioError) {
     print("-----------------接口调用流程出错-----------------");
     print("接口地址：" + dioError.request.baseUrl + dioError.request.path);
+    print("请求类型：" + dioError.request.method);
+    print("请求传参：" + dioError.request.data.toString());
     print("出错堆栈：" + dioError.toString());
   }
 
-  static String _succesInfoOutput(Response response) {
+  static void _succesInfoOutput(Response response) {
+    if (response == null) return;
+    if (response.request == null) return;
     print("-----------------接口调用成功-----------------");
     print("接口地址：" + response.request.baseUrl + response.request.path);
     print("json数据：" + json.encode(response.data));

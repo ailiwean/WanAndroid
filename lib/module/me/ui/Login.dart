@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:wan_android/common/network/Network.dart';
 import 'package:wan_android/common/route/RouteManager.dart';
 import 'package:wan_android/common/utils/AppScreen.dart';
+import 'package:wan_android/common/utils/AppToastUtils.dart';
 import 'package:wan_android/common/widget/BesselWidget.dart';
 import 'package:wan_android/generated/assets.dart';
+import 'package:wan_android/module/me/api/MeApi.dart';
 import 'package:wan_android/res/AppColors.dart';
 import 'package:wan_android/res/Duration.dart';
 import 'package:wan_android/res/Style.dart';
@@ -163,7 +166,7 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
                     Icons.clear,
                   ),
                   onPressed: () {
-                    logPassword.clear();
+                    userName.clear();
                   },
                 )),
             maxLines: 1,
@@ -176,7 +179,7 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
           child: TextField(
             textInputAction: TextInputAction.next,
             obscureText: true,
-            controller: regPassword,
+            controller: logPassword,
             decoration: InputDecoration(
                 icon: Icon(
                   Icons.vpn_key,
@@ -191,7 +194,7 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
                     Icons.clear,
                   ),
                   onPressed: () {
-                    regEmail.clear();
+                    logPassword.clear();
                   },
                 )),
             maxLines: 1,
@@ -392,12 +395,44 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
 
   //点击登陆
   void clickLogin() {
-
+    if (userName.text.isEmpty) {
+      AppToastUtils.showToast("用户名不能为空！");
+      return;
+    }
+    if (logPassword.text.isEmpty) {
+      AppToastUtils.showToast("密码不能为空！");
+      return;
+    }
+    Network.execute(login(userName: userName.text, password: logPassword.text))
+        .then((value) {
+      print(value);
+      AppToastUtils.showToast("登陆成功");
+    });
   }
 
   //点击注册
   void clickSignUp() {
+    if (userName.text.isEmpty) {
+      AppToastUtils.showToast("用户名不能为空！");
+      return;
+    }
+    if (regEmail.text.isEmpty) {
+      AppToastUtils.showToast("邮箱不能为空！");
+      return;
+    }
+    if (regPassword.text.isEmpty) {
+      AppToastUtils.showToast("密码不能为空！");
+      return;
+    }
 
+    if (regPassword.text != regPasswrod2.text) {
+      AppToastUtils.showToast("两次输入不一致！");
+      return;
+    }
+
+    Network.execute(signUp(userName: userName.text, password: regPassword.text))
+        .then((value) {
+      // {"data":{"admin":false,"chapterTops":[],"coinCount":0,"collectIds":[],"email":"","icon":"","id":87352,"nickname":"2414","password":"","publicName":"2414","token":"","type":0,"username":"2414"},"errorCode":0,"errorMsg":""}
+    });
   }
-
 }
