@@ -3,10 +3,18 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:wan_android/common/route/RouteManager.dart';
 import 'package:wan_android/common/utils/AppScreen.dart';
 import 'package:wan_android/module/RootPage.dart';
-import 'package:wan_android/module/me/widget/DayPicture.dart';
+import 'package:wan_android/module/mine/ui/AuthorAbout.dart';
+import 'package:wan_android/module/mine/ui/Login.dart';
+import 'package:wan_android/module/mine/ui/MineBookMark.dart';
+import 'package:wan_android/module/mine/ui/MinePoints.dart';
+import 'package:wan_android/module/mine/ui/MineShare.dart';
+import 'package:wan_android/module/mine/ui/MineStoreUp.dart';
+import 'package:wan_android/module/mine/ui/OpenSource.dart';
+import 'package:wan_android/module/mine/ui/ReadHistory.dart';
+import 'package:wan_android/module/mine/ui/Setting.dart';
+import 'package:wan_android/module/mine/widget/DayPicture.dart';
 import 'package:wan_android/res/AppColors.dart';
 import 'package:wan_android/res/Style.dart';
-import 'package:wan_android/module/me/ui/Login.dart';
 
 class Me extends StatefulWidget with RootPage {
   static String pageName = "我的";
@@ -50,14 +58,22 @@ class _MeState extends State<Me> with AutomaticKeepAliveClientMixin {
             ],
           ),
         ),
-        _getMenuItem(Icons.integration_instructions, "我的积分", () => null),
-        _getMenuItem(Icons.share, "我的分享", () => null),
-        _getMenuItem(Icons.collections, "我的收藏", () => null),
-        _getMenuItem(Icons.bookmark, "我的书签", () => null),
-        _getMenuItem(Icons.history, "阅读历史", () => null),
-        _getMenuItem(Icons.category, "开源项目", () => null),
-        _getMenuItem(Icons.info, "关于作者", () => null),
-        _getMenuItem(Icons.settings, "系统设置", () => null),
+        _getMenuItem(Icons.integration_instructions, "我的积分",
+            () => RouteManager.startPage(context, MinePoints)),
+        _getMenuItem(Icons.share, "我的分享",
+            () => RouteManager.startPage(context, MineShare)),
+        _getMenuItem(Icons.collections, "我的收藏",
+            () => RouteManager.startPage(context, MineStoreUp)),
+        _getMenuItem(Icons.bookmark, "我的书签",
+            () => RouteManager.startPage(context, MineBookMark)),
+        _getMenuItem(Icons.history, "阅读历史",
+            () => RouteManager.startPage(context, ReadHistory)),
+        _getMenuItem(Icons.category, "开源项目",
+            () => RouteManager.startPage(context, OpenSource)),
+        _getMenuItem(Icons.info, "关于作者",
+            () => RouteManager.startPage(context, AuthorAbout)),
+        _getMenuItem(Icons.settings, "系统设置",
+            () => RouteManager.startPage(context, Setting)),
         Style.heightPlaceHolder(200)
       ],
     ));

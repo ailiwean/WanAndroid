@@ -6,10 +6,18 @@ import 'package:wan_android/common/route/AnimaRoute.dart';
 import 'package:wan_android/common/widget/WebViewWrap.dart';
 import 'package:wan_android/module/home/ui/Home.dart';
 import 'package:wan_android/module/home/ui/HomeSearch.dart';
-import 'package:wan_android/module/me/ui/Me.dart';
+import 'package:wan_android/module/mine/ui/AuthorAbout.dart';
+import 'package:wan_android/module/mine/ui/Login.dart';
+import 'package:wan_android/module/mine/ui/Mine.dart';
+import 'package:wan_android/module/mine/ui/MineBookMark.dart';
+import 'package:wan_android/module/mine/ui/MinePoints.dart';
+import 'package:wan_android/module/mine/ui/MineShare.dart';
+import 'package:wan_android/module/mine/ui/MineStoreUp.dart';
+import 'package:wan_android/module/mine/ui/OpenSource.dart';
+import 'package:wan_android/module/mine/ui/ReadHistory.dart';
+import 'package:wan_android/module/mine/ui/Setting.dart';
 import 'package:wan_android/module/qa/ui/Qa.dart';
 import 'package:wan_android/module/system/ui/System.dart';
-import 'package:wan_android/module/me/ui/Login.dart';
 
 ///  路由管理
 class RouteManager {
@@ -26,6 +34,14 @@ class RouteManager {
           arguments: arguments,
         ),
     getRouteName(Login): (context, {arguments}) => Login(),
+    getRouteName(MineBookMark): (context, {arguments}) => MineBookMark(),
+    getRouteName(AuthorAbout): (context, {arguments}) => MineBookMark(),
+    getRouteName(MinePoints): (context, {arguments}) => MinePoints(),
+    getRouteName(MineShare): (context, {arguments}) => MineShare(),
+    getRouteName(OpenSource): (context, {arguments}) => OpenSource(),
+    getRouteName(ReadHistory): (context, {arguments}) => ReadHistory(),
+    getRouteName(Setting): (context, {arguments}) => Setting(),
+    getRouteName(MineStoreUp): (context, {arguments}) => Setting(),
   };
 
   // ignore: top_level_function_literal_block
@@ -59,14 +75,16 @@ class RouteManager {
   }
 
   ///启动一个页面关闭当前页面
-  static startPageWithFinish(BuildContext context, Type type, {argusments}) {
+  static Future<dynamic> startPageWithFinish(BuildContext context, Type type,
+      {argusments}) {
     if (RouteManager.getRouteName(type) == null) throw "Not fount this Page";
-    Navigator.of(context).popAndPushNamed(RouteManager.getRouteName(type),
+    return Navigator.of(context).popAndPushNamed(
+        RouteManager.getRouteName(type),
         arguments: argusments);
   }
 
   ///关闭这个页面
-  static finish(BuildContext context) {
-    Navigator.pop(context);
+  static finish(BuildContext context, {dynamic result}) {
+    Navigator.pop(context, result);
   }
 }

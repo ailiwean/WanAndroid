@@ -7,7 +7,7 @@ import 'package:wan_android/common/utils/AppScreen.dart';
 import 'package:wan_android/common/utils/AppToastUtils.dart';
 import 'package:wan_android/common/widget/BesselWidget.dart';
 import 'package:wan_android/generated/assets.dart';
-import 'package:wan_android/module/me/api/MeApi.dart';
+import 'package:wan_android/module/mine/api/MeApi.dart';
 import 'package:wan_android/res/AppColors.dart';
 import 'package:wan_android/res/Duration.dart';
 import 'package:wan_android/res/Style.dart';
@@ -32,6 +32,15 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
   var regEmail = TextEditingController();
   var regPassword = TextEditingController();
   var regPasswrod2 = TextEditingController();
+
+  var focusList = [
+    FocusNode(),
+    FocusNode(),
+    FocusNode(),
+    FocusNode(),
+    FocusNode(),
+    FocusNode(),
+  ];
 
   @override
   void initState() {
@@ -149,7 +158,11 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
         Container(
           width: setSuitWidthPx(500),
           child: TextField(
+            focusNode: focusList[0],
             textInputAction: TextInputAction.next,
+            onSubmitted: (t) {
+              FocusScope.of(context).requestFocus(focusList[1]);
+            },
             keyboardType: TextInputType.name,
             controller: userName,
             decoration: InputDecoration(
@@ -177,7 +190,11 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
         Container(
           width: setSuitWidthPx(500),
           child: TextField(
-            textInputAction: TextInputAction.next,
+            focusNode: focusList[1],
+            textInputAction: TextInputAction.go,
+            onSubmitted: (t) {
+              clickLogin();
+            },
             obscureText: true,
             controller: logPassword,
             decoration: InputDecoration(
@@ -253,7 +270,11 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
         Container(
           width: setSuitWidthPx(500),
           child: TextField(
+            focusNode: focusList[2],
             textInputAction: TextInputAction.next,
+            onSubmitted: (t) {
+              FocusScope.of(context).requestFocus(focusList[3]);
+            },
             keyboardType: TextInputType.name,
             controller: userName,
             decoration: InputDecoration(
@@ -281,7 +302,11 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
         Container(
           width: setSuitWidthPx(500),
           child: TextField(
+            focusNode: focusList[3],
             textInputAction: TextInputAction.next,
+            onSubmitted: (t) {
+              FocusScope.of(context).requestFocus(focusList[4]);
+            },
             keyboardType: TextInputType.emailAddress,
             controller: regEmail,
             decoration: InputDecoration(
@@ -309,7 +334,11 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
         Container(
           width: setSuitWidthPx(500),
           child: TextField(
+            focusNode: focusList[4],
             textInputAction: TextInputAction.next,
+            onSubmitted: (t) {
+              FocusScope.of(context).requestFocus(focusList[5]);
+            },
             obscureText: true,
             controller: regPassword,
             decoration: InputDecoration(
@@ -337,7 +366,11 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
         Container(
           width: setSuitWidthPx(500),
           child: TextField(
+            focusNode: focusList[5],
             textInputAction: TextInputAction.next,
+            onSubmitted: (t) {
+              clickSignUp();
+            },
             obscureText: true,
             controller: regPasswrod2,
             decoration: InputDecoration(
@@ -405,8 +438,8 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
     }
     Network.execute(login(userName: userName.text, password: logPassword.text))
         .then((value) {
-      print(value);
-      AppToastUtils.showToast("登陆成功");
+      print(value.toString());
+      RouteManager.finish(context);
     });
   }
 
@@ -432,7 +465,9 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
 
     Network.execute(signUp(userName: userName.text, password: regPassword.text))
         .then((value) {
-      // {"data":{"admin":false,"chapterTops":[],"coinCount":0,"collectIds":[],"email":"","icon":"","id":87352,"nickname":"2414","password":"","publicName":"2414","token":"","type":0,"username":"2414"},"errorCode":0,"errorMsg":""}
+      //注册成功重用密码登陆
+      logPassword.text = regPassword.text;
+      clickLogin();
     });
   }
 }

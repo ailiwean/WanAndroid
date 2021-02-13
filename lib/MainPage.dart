@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wan_android/module/RootPage.dart';
-import 'package:wan_android/module/me/ui/Me.dart';
+import 'package:wan_android/module/mine/ui/Mine.dart';
 import 'package:wan_android/module/qa/ui/Qa.dart';
 import 'package:wan_android/res/AppColors.dart';
 import 'package:wan_android/res/Duration.dart';
