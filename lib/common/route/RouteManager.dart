@@ -4,7 +4,6 @@ import 'package:wan_android/MainPage.dart';
 import 'package:wan_android/SplashPage.dart';
 import 'package:wan_android/common/route/AnimaRoute.dart';
 import 'package:wan_android/common/widget/WebViewWrap.dart';
-import 'package:wan_android/module/home/ui/Home.dart';
 import 'package:wan_android/module/home/ui/HomeSearch.dart';
 import 'package:wan_android/module/mine/ui/AuthorAbout.dart';
 import 'package:wan_android/module/mine/ui/Login.dart';
@@ -16,18 +15,14 @@ import 'package:wan_android/module/mine/ui/MineStoreUp.dart';
 import 'package:wan_android/module/mine/ui/OpenSource.dart';
 import 'package:wan_android/module/mine/ui/ReadHistory.dart';
 import 'package:wan_android/module/mine/ui/Setting.dart';
-import 'package:wan_android/module/qa/ui/Qa.dart';
-import 'package:wan_android/module/system/ui/System.dart';
 
 ///  路由管理
 class RouteManager {
   static final route = {
     getRouteName(SplashPage): (context, {arguments}) => SplashPage(),
-    getRouteName(MainPage): (context, {arguments}) => MainPage(),
-    getRouteName(Home): (context, {arguments}) => Sort(),
-    getRouteName(Me): (context, {arguments}) => Me(),
-    getRouteName(Qa): (context, {arguments}) => Qa(),
-    getRouteName(Sort): (context, {arguments}) => Sort(),
+    getRouteName(MainPage): (context, {arguments}) => MainPage(
+          loginJson: arguments[Mine.needLoginKey],
+        ),
     getRouteName(HomeSearch): (context, {arguments}) => HomeSearch(),
     getRouteName(WebViewWrap): (context, {arguments}) => WebViewWrap(
           url: arguments["url"],
@@ -68,9 +63,10 @@ class RouteManager {
   }
 
   /// 启动一个页面
-  static startPage(BuildContext context, Type type, {argusments}) {
+  static Future<dynamic> startPage(BuildContext context, Type type,
+      {argusments}) {
     if (RouteManager.getRouteName(type) == null) throw "Not fount this Page";
-    Navigator.of(context)
+    return Navigator.of(context)
         .pushNamed(RouteManager.getRouteName(type), arguments: argusments);
   }
 

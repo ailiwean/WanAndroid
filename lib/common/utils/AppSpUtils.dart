@@ -9,6 +9,8 @@ class AppSpUtils {
   //每日一图
   static final String daypicture = _appSymbol + "daypicture";
 
+  static final String loginJson = _appSymbol + "loginJson";
+
   static Future<T> getValues<T>(String key, {dynamic nullValues}) async {
     try {
       SharedPreferences sharedPreferences =

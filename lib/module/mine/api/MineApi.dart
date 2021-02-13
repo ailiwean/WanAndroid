@@ -4,7 +4,9 @@ import 'package:wan_android/common/network/BaseApi.dart';
 /// @Author: SWY
 /// @Date: 2021/2/10 20:43
 login({String userName, String password}) => BaseApi.create(
-    server: "/user/login", body: {"username": userName, "password": password});
+    isFrom: true,
+    server: "/user/login",
+    body: {"username": userName, "password": password});
 
 signUp({String userName, String password}) => BaseApi.create(
     isFrom: true,

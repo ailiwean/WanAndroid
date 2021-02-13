@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:wan_android/module/RootPage.dart';
 
-class Sort extends StatefulWidget with RootPage {
+class System extends StatefulWidget with RootPage {
   static String pageName = "体系";
 
   @override
-  _SortState createState() => _SortState();
+  _SystemState createState() => _SystemState();
 
   @override
   String getPageName() {
@@ -18,14 +18,14 @@ class Sort extends StatefulWidget with RootPage {
   }
 }
 
-class _SortState extends State<Sort> with AutomaticKeepAliveClientMixin {
+class _SystemState extends State<System> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(Sort.pageName),
+        title: Text(System.pageName),
       ),
     );
   }

@@ -114,6 +114,7 @@ class Network {
     if (response.request == null) return;
     print("-----------------接口调用成功-----------------");
     print("接口地址：" + response.request.baseUrl + response.request.path);
+    print("相应头："+response.headers.toString());
     print("json数据：" + json.encode(response.data));
   }
 }

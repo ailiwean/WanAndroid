@@ -1,6 +1,8 @@
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil_init.dart';
 import 'package:wan_android/SplashPage.dart';
+import 'package:wan_android/common/native/CookieManager.dart';
 import 'package:wan_android/common/route/RouteManager.dart';
 import 'package:wan_android/common/utils/AppBarUtils.dart';
 import 'package:wan_android/common/utils/AppToastUtils.dart';
@@ -39,6 +41,7 @@ class MyApp extends StatelessWidget {
     //网络请求库初始化
     Network.build()
         .setBaseUrl("https://wanandroid.com")
+        .addInterceptor(CookieManager(CookieJar()))
         .setBaseHeaders({}).build();
   }
 }

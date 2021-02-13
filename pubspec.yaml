@@ -36,6 +36,7 @@ dependencies:
   #  share: ^0.6.5+4
   shared_preferences: ^0.5.12+4
   flutter_spinkit: ^4.1.2
+  cookie_jar: ^1.0.1
 
 dev_dependencies:
   flutter_test:

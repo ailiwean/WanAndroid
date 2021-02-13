@@ -7,7 +7,8 @@ import 'package:wan_android/common/utils/AppScreen.dart';
 import 'package:wan_android/common/utils/AppToastUtils.dart';
 import 'package:wan_android/common/widget/BesselWidget.dart';
 import 'package:wan_android/generated/assets.dart';
-import 'package:wan_android/module/mine/api/MeApi.dart';
+import 'package:wan_android/module/mine/api/MineApi.dart';
+import 'package:wan_android/module/mine/bean/login_res.dart';
 import 'package:wan_android/res/AppColors.dart';
 import 'package:wan_android/res/Duration.dart';
 import 'package:wan_android/res/Style.dart';
@@ -238,7 +239,7 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
               padding: EdgeInsets.only(
                   top: setSuitHeightPx(20), bottom: setSuitHeightPx(20)),
               child: Text(
-                "注册",
+                "登录",
                 style: TextStyle(color: Colors.white),
               ),
             ),
@@ -438,8 +439,7 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
     }
     Network.execute(login(userName: userName.text, password: logPassword.text))
         .then((value) {
-      print(value.toString());
-      RouteManager.finish(context);
+      RouteManager.finish(context, result: LoginRes.fromJson(value));
     });
   }
 

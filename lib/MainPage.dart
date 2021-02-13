@@ -9,28 +9,45 @@ import 'module/home/ui/Home.dart';
 import 'module/system/ui/System.dart';
 
 class MainPage extends StatefulWidget {
+  final loginJson;
+
+  MainPage({Key key, this.loginJson});
+
   @override
-  _MainPageState createState() => _MainPageState();
+  _MainPageState createState() => _MainPageState(loginJson: loginJson);
 }
 
 class _MainPageState extends State<MainPage> {
-  final pageList = <Widget>[Home(), Sort(), Qa(), Me()];
+  final loginJson;
+
+  List pageList = <Widget>[];
 
   //当前选中item
   var curentIndex = 0;
 
   PageView pageView;
 
-  _MainPageState() {
+  _MainPageState({this.loginJson}) {
+    pageList
+      ..add(Home())
+      ..add(System())
+      ..add(Qa())
+      ..add(Mine(
+        loginjson: loginJson.toString(),
+      ));
+  }
+
+  @override
+  void initState() {
+    super.initState();
     this.pageView = PageView(
-      controller: PageController(initialPage: curentIndex),
-      children: pageList,
-      onPageChanged: (current) {
-        setState(() {
-          curentIndex = current;
+        controller: PageController(initialPage: curentIndex),
+        children: pageList,
+        onPageChanged: (current) {
+          setState(() {
+            curentIndex = current;
+          });
         });
-      },
-    );
   }
 
   @override
