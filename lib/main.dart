@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       initialRoute: RouteManager.getRouteName(SplashPage),
       onGenerateRoute: RouteManager.generateRoute,
       theme: ThemeData(
-          accentColor: Colors.transparent,
+          accentColor: AppColors.navigatorItemSelectColor,
           appBarTheme: AppBarTheme(backgroundColor: AppColors.primaryColor),
           primaryColor: AppColors.primaryColor),
     );

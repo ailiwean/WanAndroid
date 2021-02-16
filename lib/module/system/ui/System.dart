@@ -3,6 +3,9 @@ import 'package:wan_android/common/helper/NestPageHelperChild.dart';
 import 'package:wan_android/common/utils/AppScreen.dart';
 import 'package:wan_android/module/RootPage.dart';
 
+import 'NavigationPart.dart';
+import 'SystemPart.dart';
+
 class System extends StatefulWidget with RootPage {
   static String pageName = "体系";
 
@@ -49,10 +52,7 @@ class _SystemState extends State<System>
       )),
       body: TabBarView(
         controller: tabController,
-        children: <Widget>[
-          Center(child: Text("体系")),
-          Center(child: Text("导航"))
-        ],
+        children: <Widget>[SystemPart(), NavigationPart()],
       ),
     ));
   }

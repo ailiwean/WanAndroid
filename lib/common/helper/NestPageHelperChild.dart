@@ -27,7 +27,7 @@ class NestPageHelperChild extends StatelessWidget {
             if (!isStart) return false;
             ScrollUpdateNotification xdiff = notification;
             if (xdiff.dragDetails == null) return false;
-            double offsetX = -xdiff.dragDetails.delta.dx;
+            double offsetX = xdiff.dragDetails.delta.dx;
             movediff.update(offsetX);
             movediff.dispatch(context);
             break;
@@ -40,7 +40,8 @@ class NestPageHelperChild extends StatelessWidget {
             break;
           case OverscrollNotification:
             OverscrollNotification xdiff = notification;
-            double offsetX = xdiff.overscroll;
+            if (xdiff.dragDetails == null) return false;
+            double offsetX = xdiff.dragDetails.delta.dx;
             if (movediff == null) {
               isStart = true;
               movediff = NestedMoveNotification(xdiff: offsetX);
