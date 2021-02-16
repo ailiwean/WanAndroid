@@ -15,7 +15,10 @@ class NestPageHelperChild extends StatelessWidget {
     var movediff;
     bool isStart = false;
     return NotificationListener(
-      child: child,
+      child: ScrollConfiguration(
+        child: child,
+        behavior: _AlphaScrollBehavior(),
+      ),
       onNotification: (notification) {
         switch (notification.runtimeType) {
           case ScrollStartNotification:
@@ -50,5 +53,24 @@ class NestPageHelperChild extends StatelessWidget {
         return true;
       },
     );
+  }
+}
+
+class _AlphaScrollBehavior extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    return GlowingOverscrollIndicator(
+      child: child,
+      axisDirection: axisDirection,
+      color: Colors.transparent,
+      showLeading: false,
+      showTrailing: false,
+    );
+  }
+
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) {
+    return ClampingScrollPhysics();
   }
 }

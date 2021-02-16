@@ -48,7 +48,6 @@ class _SystemState extends State<System>
         ],
       )),
       body: TabBarView(
-        physics: ClampingScrollPhysics(),
         controller: tabController,
         children: <Widget>[
           Center(child: Text("体系")),
@@ -59,5 +58,5 @@ class _SystemState extends State<System>
   }
 
   @override
-  bool get wantKeepAlive => false;
+  bool get wantKeepAlive => true;
 }
