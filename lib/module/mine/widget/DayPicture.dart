@@ -9,27 +9,35 @@ import 'package:wan_android/common/utils/AppSpUtils.dart';
 /// @Author: SWY
 /// @Date: 2021/2/10 22:52
 class DayPicture extends StatefulWidget {
-  DayPicture({Key key}) : super(key: key);
-
   @override
   _DayPictureState createState() => _DayPictureState();
 }
 
 class _DayPictureState extends State<DayPicture> {
   final url = "https://api.mfstudio.cc/motu";
+  bool isLogin = false;
 
   @override
   Widget build(BuildContext context) {
     isNeedUpdate();
+    isUserLogin();
     return Stack(
       children: <Widget>[
         _getCacheNetImage(),
         BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+            filter: ImageFilter.blur(
+                sigmaX: isLogin ? 0 : 5.0, sigmaY: isLogin ? 0 : 5.0),
             child: Container(color: Colors.transparent)),
       ],
       fit: StackFit.expand,
     );
+  }
+
+  void isUserLogin() {
+    AppSpUtils.getValues(AppSpUtils.loginJson, nullValues: "").then((value) {
+      isLogin = value.toString().isNotEmpty;
+      setState(() {});
+    });
   }
 
   _getCacheNetImage() {

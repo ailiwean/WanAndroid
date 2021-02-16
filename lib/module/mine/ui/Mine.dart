@@ -89,8 +89,7 @@ class _MineState extends State<Mine> with AutomaticKeepAliveClientMixin {
             () => RouteManager.startPage(context, OpenSource)),
         _getMenuItem(Icons.info, "关于作者",
             () => RouteManager.startPage(context, AuthorAbout)),
-        _getMenuItem(Icons.settings, "系统设置",
-            () => RouteManager.startPage(context, Setting)),
+        _getMenuItem(Icons.settings, "系统设置", () => openSetting()),
         Style.heightPlaceHolder(200)
       ],
     ));
@@ -204,6 +203,13 @@ class _MineState extends State<Mine> with AutomaticKeepAliveClientMixin {
     if (result == null) return;
     await AppSpUtils.setValues(AppSpUtils.loginJson, json.encode(result));
     res = result as LoginRes;
+    setState(() {});
+  }
+
+  void openSetting() async {
+    var isLoginOut = await RouteManager.startPage(context, Setting);
+    if (isLoginOut == null || !isLoginOut) return;
+    res = null;
     setState(() {});
   }
 

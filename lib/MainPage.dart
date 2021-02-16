@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wan_android/common/helper/NestPageHelperParent.dart';
 import 'package:wan_android/module/RootPage.dart';
 import 'package:wan_android/module/mine/ui/Mine.dart';
 import 'package:wan_android/module/qa/ui/Qa.dart';
@@ -27,6 +28,8 @@ class _MainPageState extends State<MainPage> {
 
   PageView pageView;
 
+  PageController pageController;
+
   _MainPageState({this.loginJson}) {
     pageList
       ..add(Home())
@@ -40,8 +43,9 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
+    pageController = PageController(initialPage: curentIndex);
     this.pageView = PageView(
-        controller: PageController(initialPage: curentIndex),
+        controller: pageController,
         children: pageList,
         onPageChanged: (current) {
           setState(() {
@@ -53,7 +57,9 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: pageView, bottomNavigationBar: _getBottomNavigationBar());
+        body: NestPageHelperParent(
+            child: pageView, pageController: pageController),
+        bottomNavigationBar: _getBottomNavigationBar());
   }
 
   BottomNavigationBar _getBottomNavigationBar() {
