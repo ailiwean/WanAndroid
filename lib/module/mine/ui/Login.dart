@@ -220,31 +220,34 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
           ),
         ),
         Style.heightPlaceHolder(50),
-        Container(
-          width: double.infinity,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              color: AppColors.navigatorItemSelectColor,
-              borderRadius: BorderRadius.all(Radius.circular(99))),
-          margin: EdgeInsets.only(
+        Padding(
+          padding: EdgeInsets.only(
               left: setSuitWidthPx(50), right: setSuitWidthPx(50)),
-          child: ElevatedButton(
-            style: Style.transButtonStyle,
-            onPressed: () {
-              clickLogin();
-            },
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(99)),
             child: Container(
+              color: AppColors.navigatorItemSelectColor,
               width: double.infinity,
               alignment: Alignment.center,
-              padding: EdgeInsets.only(
-                  top: setSuitHeightPx(20), bottom: setSuitHeightPx(20)),
-              child: Text(
-                "登录",
-                style: TextStyle(color: Colors.white),
+              child: ElevatedButton(
+                style: Style.transButtonStyle,
+                onPressed: () {
+                  clickLogin();
+                },
+                child: Container(
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.only(
+                      top: setSuitHeightPx(20), bottom: setSuitHeightPx(20)),
+                  child: Text(
+                    "登录",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
               ),
             ),
           ),
-        ),
+        )
       ],
     );
   }
@@ -398,29 +401,32 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
 
         Style.heightPlaceHolder(50),
 
-        Container(
-          width: double.infinity,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              color: AppColors.navigatorItemSelectColor,
-              borderRadius: BorderRadius.all(Radius.circular(99))),
-          margin: EdgeInsets.only(
+        Padding(
+          padding: EdgeInsets.only(
               left: setSuitWidthPx(50), right: setSuitWidthPx(50)),
-          child: ElevatedButton(
-            style: Style.transButtonStyle,
-            onPressed: () {
-              clickSignUp();
-            },
+          child: ClipRRect(
             child: Container(
+              color: AppColors.navigatorItemSelectColor,
               width: double.infinity,
               alignment: Alignment.center,
-              padding: EdgeInsets.only(
-                  top: setSuitHeightPx(20), bottom: setSuitHeightPx(20)),
-              child: Text(
-                "注册",
-                style: TextStyle(color: Colors.white),
+              child: ElevatedButton(
+                style: Style.transButtonStyle,
+                onPressed: () {
+                  clickSignUp();
+                },
+                child: Container(
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.only(
+                      top: setSuitHeightPx(20), bottom: setSuitHeightPx(20)),
+                  child: Text(
+                    "注册",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
               ),
             ),
+            borderRadius: BorderRadius.all(Radius.circular(99)),
           ),
         ),
       ],

@@ -19,6 +19,9 @@ class AppColors {
   //正文备注颜色
   static final textContentDescColor = Colors.grey;
 
+  //浅灰色背景
+  static final textContentGrayBg = Color.fromARGB(153, 240, 240, 240);
+
   //正文颜色
   static final textContentColor = Colors.black45;
 
