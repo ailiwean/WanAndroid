@@ -13,9 +13,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     verifyLogin();
-    return Center(
-      child: Text("SplashActivity"),
-    );
+    return Container(color: Colors.white);
   }
 
   void verifyLogin() {

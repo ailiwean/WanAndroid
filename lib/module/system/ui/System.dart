@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wan_android/common/helper/NestPageHelperChild.dart';
 import 'package:wan_android/common/utils/AppScreen.dart';
 import 'package:wan_android/module/RootPage.dart';
+import 'package:wan_android/res/AppColors.dart';
 
 import 'NavigationPart.dart';
 import 'SystemPart.dart';
@@ -43,7 +44,7 @@ class _SystemState extends State<System>
         indicatorColor: Colors.transparent,
         controller: tabController,
         unselectedLabelColor: Colors.black,
-        labelColor: Colors.red,
+        labelColor: AppColors.navigatorItemSelectColor,
         labelStyle: TextStyle(fontSize: setSuitTextPx(35)),
         tabs: <Widget>[
           Tab(text: "                     体系"),
